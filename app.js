@@ -24,79 +24,6 @@ const projects = {
     gallery:[['assets/santa-helena-living.webp','Living integrado · tipologia de 135 m²'],['assets/santa-helena-piscina.webp','Piscina e áreas externas']]
   }
 };
-const works = {
-  "gran-villaggio": {
-    "name": "Gran Villaggio",
-    "image": "assets/portfolio/gran-villaggio-ia-v2.webp"
-  },
-  "valencia": {
-    "name": "Valencia",
-    "image": "assets/portfolio/valencia-ia-v2.webp"
-  },
-  "portland": {
-    "name": "Portland",
-    "image": "assets/portfolio/portland-ia-v2.webp"
-  },
-  "san-francisco": {
-    "name": "San Francisco",
-    "image": "assets/portfolio/san-francisco-ia-v2.webp"
-  },
-  "gran-torino": {
-    "name": "Gran Torino",
-    "image": "assets/portfolio/gran-torino-ia-v2.webp"
-  },
-  "gran-piazza": {
-    "name": "Gran Piazza",
-    "image": "assets/portfolio/gran-piazza-ia-v2.webp"
-  },
-  "munich": {
-    "name": "Munich",
-    "image": "assets/portfolio/munich-ia-v2.webp"
-  },
-  "rotterdam": {
-    "name": "Rotterdam",
-    "image": "assets/portfolio/rotterdam-ia-v2.webp"
-  },
-  "dakota": {
-    "name": "Dakota",
-    "image": "assets/portfolio/dakota-ia-v2.webp"
-  },
-  "san-germain": {
-    "name": "San Germain",
-    "image": "assets/portfolio/san-germain-ia-v2.webp"
-  },
-  "torre-di-lucca": {
-    "name": "Torre di Lucca",
-    "image": "assets/portfolio/torre-di-lucca-ia-v2.webp"
-  },
-  "san-lorenzo": {
-    "name": "San Lorenzo",
-    "image": "assets/portfolio/san-lorenzo-ia-v2.webp"
-  },
-  "montreal": {
-    "name": "Montreal",
-    "image": "assets/portfolio/montreal-ia-v2.webp"
-  },
-  "firenze": {
-    "name": "Firenze",
-    "image": "assets/portfolio/firenze-ia-v2.webp"
-  },
-  "san-sebastian": {
-    "name": "San Sebastian",
-    "image": "assets/portfolio/san-sebastian-ia-v2.webp"
-  },
-  "monte-carlo": {
-    "name": "Monte Carlo",
-    "image": "assets/portfolio/monte-carlo-ia-v2.webp"
-  }
-};
-const articles = {
-  'espacos-integrados':{title:'Espaços integrados: uma nova relação com a casa.',category:'Arquitetura',image:'assets/sunview-living.webp',paragraphs:['Quando estar, jantar e cozinha compartilham o mesmo ambiente, a casa ganha novas possibilidades de uso. A proximidade entre os espaços favorece o convívio e permite que diferentes momentos aconteçam juntos.','Na hora de conhecer uma planta, observe a circulação, a entrada de luz e como o mobiliário pode participar da sua rotina. Um espaço generoso também precisa fazer sentido para quem vai viver nele.']},
-  localizacao:{title:'Como olhar para a localização do seu próximo imóvel.',category:'Escolhas',image:'assets/sunview-detalhe.webp',paragraphs:['A localização faz parte da experiência de morar. O caminho para o trabalho, os lugares que você frequenta e os serviços do bairro ajudam a entender como um endereço pode se conectar à sua vida.','Conhecer a região em diferentes momentos do dia e caminhar pelo entorno são boas formas de perceber a relação entre o empreendimento e a cidade. Cada pessoa vive o bairro de um jeito.']},
-  'areas-comuns':{title:'Áreas comuns que fazem parte dos seus dias.',category:'Bem-estar',image:'assets/santa-helena-piscina.webp',paragraphs:['Os espaços compartilhados ampliam as possibilidades de viver um empreendimento. A pausa ao lado da piscina, o encontro no salão e a atividade física podem fazer parte de uma rotina mais próxima de casa.','Ao conhecer um projeto, vale imaginar como esses ambientes se relacionam com os seus hábitos. Mais do que uma lista de espaços, o importante é encontrar possibilidades que façam sentido no seu dia a dia.']},
-  'sala-varanda':{title:'Sala-varanda: mais espaço para a vida acontecer.',category:'Morar bem',image:'assets/sunview-varanda.webp',paragraphs:['A sala-varanda aproxima os ambientes de convívio da luz e da paisagem. Um mesmo espaço pode receber uma conversa, uma refeição ou uma pausa para aproveitar a vista.','Ao conhecer uma planta, imagine como você gostaria de usar esse ambiente. A circulação, a disposição dos móveis e a conexão com o restante da casa ajudam a perceber as possibilidades para a sua rotina.']}
-};
-
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 const header = document.getElementById('site-header');
 const menuButton = document.querySelector('.menu-toggle');
@@ -110,15 +37,10 @@ const heroIndicators=[...document.querySelectorAll('[data-hero-slide]')];
 let activeSlide=0,activePhoto=0,heroVisible=true,frame=null,started=performance.now(),elapsed=0;
 const imageDuration=6000;
 
-const menuLinks=[...document.querySelectorAll('.desktop-nav a,.mobile-nav a')];
-const menuSections=[...document.querySelectorAll('.desktop-nav a')].map(link=>document.querySelector(link.getAttribute('href')));
 function updateHeader(){
   header.classList.toggle('scrolled',window.scrollY>56);
   const height=header.offsetHeight;
   whatsappFloating.classList.toggle('is-visible',hero.getBoundingClientRect().bottom<=height);
-  let current=menuSections[0].id;
-  menuSections.forEach(section=>{if(section.getBoundingClientRect().top<=height+40)current=section.id;});
-  menuLinks.forEach(link=>{if(link.getAttribute('href')===`#${current}`)link.setAttribute('aria-current','location');else link.removeAttribute('aria-current');});
   const stage=livingStage.getBoundingClientRect();
   const immersive=innerWidth>600&&!reducedMotion.matches&&stage.top<=0&&stage.bottom>height;
   const image=livingCenter.getBoundingClientRect();
@@ -131,10 +53,10 @@ function setMenu(open){
   menuButton.setAttribute('aria-label',open?'Fechar menu':'Abrir menu');header.classList.toggle('menu-open',open);
 }
 menuButton.addEventListener('click',()=>setMenu(mobileNav.hidden));
-mobileNav.querySelectorAll('a').forEach(link=>link.addEventListener('click',()=>setMenu(false)));
+mobileNav.querySelectorAll('button').forEach(link=>link.addEventListener('click',()=>setMenu(false)));
 document.addEventListener('keydown',event=>{if(event.key==='Escape'&&!mobileNav.hidden){setMenu(false);menuButton.focus();}});
 
-function shouldRun(){return heroVisible&&!document.hidden&&!reducedMotion.matches&&!document.body.classList.contains('dialog-open');}
+function shouldRun(){return heroVisible&&!document.hidden&&!reducedMotion.matches&&!document.body.classList.contains('review-picking')&&!document.body.classList.contains('review-drafting')&&!document.body.classList.contains('review-focusing');}
 function progressFrame(now){
   frame=null;
   if(!shouldRun())return;
@@ -184,7 +106,7 @@ function showSlide(next){
   heroContent.setAttribute('aria-label',`${activeSlide+1} de 2: ${project.name}`);
   document.querySelectorAll('[data-slide]').forEach(button=>{button.setAttribute('aria-pressed',String(Number(button.dataset.slide)===activeSlide));button.querySelector('.slide-progress').style.transform='scaleX(0)';});
   heroIndicators.forEach((button,index)=>{button.setAttribute('aria-pressed',String(index===activeSlide));button.querySelector('.hero-indicator-progress').style.transform='scaleY(0)';});
-  if(!reducedMotion.matches)heroContent.animate([{opacity:.35,transform:'translateX(16px)'},{opacity:1,transform:'translateX(0)'}],{duration:420,easing:'ease-out'});
+  if(!reducedMotion.matches&&!document.body.classList.contains('review-focusing'))heroContent.animate([{opacity:.35,transform:'translateX(16px)'},{opacity:1,transform:'translateX(0)'}],{duration:420,easing:'ease-out'});
   elapsed=0;schedule();
 }
 document.querySelectorAll('[data-slide]').forEach(button=>button.addEventListener('click',()=>showSlide(Number(button.dataset.slide))));
@@ -192,6 +114,14 @@ heroIndicators.forEach(button=>button.addEventListener('click',()=>showSlide(Num
 document.getElementById('previous-slide').addEventListener('click',()=>showSlide(activeSlide-1));
 document.getElementById('next-slide').addEventListener('click',()=>showSlide(activeSlide+1));
 document.addEventListener('visibilitychange',schedule);
+document.addEventListener('merhy-review-mode',schedule);
+document.addEventListener('merhy-review-project',event=>{
+  const index=slideKeys.indexOf(event.detail.project);
+  if(index<0)return;
+  showSlide(index);
+  const photo=projects[slideKeys[index]].heroPhotos.findIndex(image=>image[0]===event.detail.image);
+  if(photo>0){elapsed=photo*imageDuration;showHeroPhoto(photo);schedule();}
+});
 new IntersectionObserver(entries=>{heroVisible=entries[0].isIntersecting;schedule();},{threshold:.1}).observe(hero);
 
 const revealObserver=new IntersectionObserver(entries=>entries.forEach(entry=>{
@@ -224,10 +154,23 @@ livingMedia.forEach((media,index)=>{
 let livingActive=0;
 function setLivingActive(index){
   livingActive=index;
+  livingStage.dataset.activeImage=livingMedia[index].src;
   livingCenter.querySelector('figcaption').textContent=livingMedia[index].caption;
-  livingCenter.querySelector('button').setAttribute('aria-label',`Ampliar ${livingMedia[index].caption}`);
+  livingCenter.querySelector('button').setAttribute('aria-label',livingMedia[index].caption);
   [...livingDots.children].forEach((dot,i)=>{dot.setAttribute('aria-current',i===index?'true':'false');});
 }
+document.addEventListener('merhy-review-living',event=>{
+  const index=livingMedia.findIndex(media=>media.src===event.detail.image);
+  if(index<0)return;
+  if(innerWidth>600&&!reducedMotion.matches){
+    const bounds=livingScroll.getBoundingClientRect();
+    window.scrollTo({top:scrollY+bounds.top+(bounds.height-innerHeight)*(.28+index*.17),behavior:'instant'});
+  }else{
+    const image=livingScenes.flatMap(scene=>[...scene.querySelectorAll('img:not(.living-slide)')]).find(image=>image.getAttribute('src')===event.detail.image);
+    if(image)window.scrollTo({top:scrollY+image.getBoundingClientRect().top-110,behavior:'instant'});
+  }
+  updateScroll();
+});
 let livingPointer=0;
 let scrollFrame=null;
 function updateScroll(){
@@ -304,46 +247,6 @@ function movePortfolio(direction){portfolioTrack.scrollBy({left:direction*(portf
 document.getElementById('portfolio-prev').addEventListener('click',()=>movePortfolio(-1));
 document.getElementById('portfolio-next').addEventListener('click',()=>movePortfolio(1));
 
-const dialog=document.getElementById('detail-dialog');
-const dialogContent=document.getElementById('dialog-content');
-let previousFocus=null;
-const closeDialog=()=>dialog.close();
-function openDialog(markup){
-  if(!dialog.open)previousFocus=document.activeElement;
-  dialogContent.innerHTML=markup;
-  if(!dialog.open)dialog.showModal();dialog.scrollTop=0;document.body.classList.add('dialog-open');
-  schedule();
-  dialog.querySelector('.dialog-close').focus({preventScroll:true});
-}
-function openProject(key){
-  const p=projects[key];
-  openDialog(`<img class="dialog-hero" src="${p.hero}" alt="${p.heroAlt}"><div class="dialog-text"><p class="eyebrow">Lançamento · ${p.city}</p><h2 id="dialog-title">${p.name}</h2><p>${p.intro}</p><div class="dialog-facts"><span><strong>${p.area}</strong>${p.areaLabel}</span><span><strong>${p.rooms}</strong>${p.extra}</span></div><p>${p.detail}</p><p>${p.address}</p><div class="dialog-gallery">${p.gallery.map(([image,caption])=>`<figure><img src="${image}" alt="${caption}" loading="lazy"><figcaption>${caption}</figcaption></figure>`).join('')}</div><button class="button button-blue" type="button" data-dialog-contact="${p.name}">Converse sobre este empreendimento</button></div>`);
-}
-function openWork(key){const work=works[key];openDialog(`<img class="dialog-work-image" src="${work.image}" alt="${work.name}, no acervo da Merhy"><div class="dialog-text"><p class="eyebrow">Obras entregues · Ponta Grossa</p><h2 id="dialog-title">${work.name}</h2><p>Um empreendimento que faz parte do acervo de obras da Merhy em Ponta Grossa.</p><button class="button button-blue" type="button" data-dialog-contact="Outras informações">Converse com a Merhy</button></div>`);}
-document.querySelectorAll('[data-project]').forEach(button=>button.addEventListener('click',()=>openProject(button.dataset.project)));
-document.querySelectorAll('[data-work]').forEach(button=>button.addEventListener('click',()=>openWork(button.dataset.work)));
-document.querySelector('[data-story]').addEventListener('click',()=>openDialog(`<div class="dialog-text"><p class="eyebrow">A Merhy · Uma tradição que continua</p><h2 id="dialog-title">Engenharia que atravessa gerações.</h2><p>A Merhy Engenharia nasceu em 2012, quando o engenheiro Ricardo Merhy se uniu aos seus filhos, os engenheiros Rodrigo e Hayglon Merhy, para dedicar uma empresa familiar à incorporação e construção de empreendimentos residenciais.</p><p>A experiência de 50 anos de profissão do fundador na engenharia civil é parte dessa história. A Merhy reúne equipe própria, projetos com dimensionamento generoso e atenção à qualidade construtiva e aos acabamentos.</p><p>O compromisso continua depois da entrega, com proximidade no atendimento e apoio aos moradores. Essa trajetória reúne 23 prédios entregues em Ponta Grossa e mais de 600 famílias.</p><button class="button button-blue" type="button" data-dialog-contact="Outras informações">Vamos conversar</button></div>`));
-document.querySelector('[data-all-works]').addEventListener('click',()=>openDialog(`<div class="dialog-text"><p class="eyebrow">Obras entregues</p><h2 id="dialog-title">Histórias que fazem parte da cidade.</h2><p>Conheça as 16 obras identificadas no acervo.</p><div class="work-list">${Object.entries(works).map(([key,work])=>`<button type="button" data-modal-work="${key}"><img src="${work.image}" alt="${work.name}"><h3>${work.name}</h3><p>Ponta Grossa</p></button>`).join('')}</div></div>`));
-document.querySelectorAll('[data-scene]').forEach(button=>button.addEventListener('click',()=>{
-  const figure=button.closest('figure'),media=figure===livingCenter&&innerWidth>600&&!reducedMotion.matches?livingMedia[livingActive]:null,image=figure.querySelector('img'),caption=media?media.caption:figure.querySelector('figcaption').textContent;
-  openDialog(`<img class="dialog-hero scene-dialog-image" src="${media?media.src:image.getAttribute('src')}" alt="${media?media.alt:image.alt}"><div class="dialog-text"><p class="eyebrow">Ambientes Merhy</p><h2 id="dialog-title">${caption}</h2></div>`);
-}));
-document.querySelector('[data-gallery]').addEventListener('click',()=>openDialog(`<div class="dialog-text"><p class="eyebrow">Ambientes Merhy</p><h2 id="dialog-title">Espaços para fazer parte da sua vida.</h2><div class="dialog-gallery">${Object.values(projects).flatMap(project=>project.gallery.map(([image,caption])=>`<figure><img src="${image}" alt="${caption}"><figcaption>${project.name} · ${caption}</figcaption></figure>`)).join('')}</div></div>`));
-function openArticle(key){
-  const article=articles[key];
-  openDialog(`<img class="dialog-hero" src="${article.image}" alt="${article.title}"><div class="dialog-text"><p class="eyebrow">${article.category}</p><h2 id="dialog-title">${article.title}</h2>${article.paragraphs.map(paragraph=>`<p>${paragraph}</p>`).join('')}</div>`);
-}
-document.querySelectorAll('[data-article]').forEach(button=>button.addEventListener('click',()=>openArticle(button.dataset.article)));
-document.querySelector('[data-all-articles]').addEventListener('click',()=>openDialog(`<div class="dialog-text"><p class="eyebrow">Blog Merhy</p><h2 id="dialog-title">Todos os conteúdos</h2><div class="journal-index">${Object.entries(articles).map(([key,article])=>`<article><img src="${article.image}" alt="${article.title}" loading="lazy"><div><p class="eyebrow">${article.category}</p><h3>${article.title}</h3></div><button type="button" data-modal-article="${key}" aria-label="Ler artigo: ${article.title}"></button></article>`).join('')}</div></div>`));
-dialog.addEventListener('click',event=>{
-  if(event.target===dialog){const b=dialog.getBoundingClientRect();if(event.clientX<b.left||event.clientX>b.right||event.clientY<b.top||event.clientY>b.bottom)closeDialog();}
-  const contact=event.target.closest('[data-dialog-contact]');
-  if(contact){const interest=document.getElementById('contact-interest');interest.value=contact.dataset.dialogContact==='Sunview'?'Sunview · Ponta Grossa':contact.dataset.dialogContact==='Santa Helena'?'Santa Helena · Guaratuba':'Outras informações';closeDialog();document.getElementById('contato').scrollIntoView({behavior:reducedMotion.matches?'instant':'smooth'});}
-  const work=event.target.closest('[data-modal-work]');if(work)openWork(work.dataset.modalWork);
-  const article=event.target.closest('[data-modal-article]');if(article)openArticle(article.dataset.modalArticle);
-});
-dialog.querySelector('.dialog-close').addEventListener('click',closeDialog);
-dialog.addEventListener('close',()=>{document.body.classList.remove('dialog-open');previousFocus?.focus({preventScroll:true});schedule();});
 document.getElementById('contact-form').addEventListener('submit',event=>{event.preventDefault();document.getElementById('form-feedback').textContent='Esta é uma prévia visual do formulário. Nenhuma mensagem foi enviada. Para conversar com a Merhy, use o WhatsApp ou o e-mail ao lado.';});
 reducedMotion.addEventListener('change',()=>{restartImage();schedule();if(reducedMotion.matches)finishCounters();updateScroll();});
 updateHeader();updateScroll();restartImage();schedule();
