@@ -133,8 +133,8 @@ document.addEventListener('keydown',event=>{if(event.key==='Escape'&&!mobileNav.
 function updatePause(){
   pauseButton.setAttribute('aria-pressed',String(playing));
   pauseButton.setAttribute('aria-label',playing?'Pausar carrossel':'Retomar carrossel');
-  pauseButton.querySelector('span').textContent=playing?'Ⅱ':'▷';
-  pauseButton.querySelector('span').classList.toggle('pause-symbol',playing);
+  pauseButton.querySelector('.pause-icon').toggleAttribute('hidden',!playing);
+  pauseButton.querySelector('.play-icon').toggleAttribute('hidden',playing);
   document.getElementById('slide-count').setAttribute('aria-live',playing?'off':'polite');
 }
 function shouldRun(){return playing&&heroVisible&&!interacting&&!document.hidden;}
