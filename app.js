@@ -5,6 +5,7 @@ const projects = {
     name:'Sunview',city:'Ponta Grossa',district:'Vila Estrela',
     tagline:'Amplitude para viver cada momento.',area:'189 m²',areaLabel:'de área útil',rooms:'3 suítes',extra:'2 vagas de garagem',
     hero:'assets/sunview-varanda.webp',heroAlt:'Sala-varanda integrada do Sunview',caption:'Sala-varanda · Sunview',
+    heroPhotos:[['assets/sunview-varanda.webp','Sala-varanda integrada do Sunview'],['assets/sunview-living.webp','Living integrado do Sunview'],['assets/sunview-piscina.webp','Piscina e espaços de convivência do Sunview']],
     facade:'assets/sunview-fachada.webp',
     intro:'Amplitude, integração e uma nova relação com os espaços. A sala-varanda de 39 m² conecta a vida dentro de casa à paisagem, em um projeto residencial na Vila Estrela.',
     address:'Rua Afonso Pena, 293, esquina com Rua Nilo Peçanha · Ponta Grossa',
@@ -15,6 +16,7 @@ const projects = {
     name:'Santa Helena',city:'Guaratuba',district:'Praia Central',
     tagline:'Mais espaço para viver o litoral.',area:'117 e 135 m²',areaLabel:'privativos',rooms:'Até 3 suítes',extra:'conforme a tipologia',
     hero:'assets/santa-helena-living.webp',heroAlt:'Living integrado do Santa Helena',caption:'Living integrado · Santa Helena',
+    heroPhotos:[['assets/santa-helena-living.webp','Living integrado do Santa Helena'],['assets/santa-helena-piscina.webp','Piscina e áreas externas do Santa Helena']],
     facade:'assets/santa-helena-fachada.webp',
     intro:'Um projeto na Praia Central de Guaratuba, com espaços de convívio que conectam living, cozinha e varanda. Uma nova possibilidade para viver o litoral.',
     address:'Rua Padre Bento, 482 · Praia Central · Guaratuba',
@@ -91,7 +93,8 @@ const works = {
 const articles = {
   'espacos-integrados':{title:'Espaços integrados: uma nova relação com a casa.',category:'Arquitetura',image:'assets/sunview-living.webp',paragraphs:['Quando estar, jantar e cozinha compartilham o mesmo ambiente, a casa ganha novas possibilidades de uso. A proximidade entre os espaços favorece o convívio e permite que diferentes momentos aconteçam juntos.','Na hora de conhecer uma planta, observe a circulação, a entrada de luz e como o mobiliário pode participar da sua rotina. Um espaço generoso também precisa fazer sentido para quem vai viver nele.']},
   localizacao:{title:'Como olhar para a localização do seu próximo imóvel.',category:'Escolhas',image:'assets/sunview-detalhe.webp',paragraphs:['A localização faz parte da experiência de morar. O caminho para o trabalho, os lugares que você frequenta e os serviços do bairro ajudam a entender como um endereço pode se conectar à sua vida.','Conhecer a região em diferentes momentos do dia e caminhar pelo entorno são boas formas de perceber a relação entre o empreendimento e a cidade. Cada pessoa vive o bairro de um jeito.']},
-  'areas-comuns':{title:'Áreas comuns que fazem parte dos seus dias.',category:'Bem-estar',image:'assets/santa-helena-piscina.webp',paragraphs:['Os espaços compartilhados ampliam as possibilidades de viver um empreendimento. A pausa ao lado da piscina, o encontro no salão e a atividade física podem fazer parte de uma rotina mais próxima de casa.','Ao conhecer um projeto, vale imaginar como esses ambientes se relacionam com os seus hábitos. Mais do que uma lista de espaços, o importante é encontrar possibilidades que façam sentido no seu dia a dia.']}
+  'areas-comuns':{title:'Áreas comuns que fazem parte dos seus dias.',category:'Bem-estar',image:'assets/santa-helena-piscina.webp',paragraphs:['Os espaços compartilhados ampliam as possibilidades de viver um empreendimento. A pausa ao lado da piscina, o encontro no salão e a atividade física podem fazer parte de uma rotina mais próxima de casa.','Ao conhecer um projeto, vale imaginar como esses ambientes se relacionam com os seus hábitos. Mais do que uma lista de espaços, o importante é encontrar possibilidades que façam sentido no seu dia a dia.']},
+  'sala-varanda':{title:'Sala-varanda: mais espaço para a vida acontecer.',category:'Morar bem',image:'assets/sunview-varanda.webp',paragraphs:['A sala-varanda aproxima os ambientes de convívio da luz e da paisagem. Um mesmo espaço pode receber uma conversa, uma refeição ou uma pausa para aproveitar a vista.','Ao conhecer uma planta, imagine como você gostaria de usar esse ambiente. A circulação, a disposição dos móveis e a conexão com o restante da casa ajudam a perceber as possibilidades para a sua rotina.']}
 };
 
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -104,8 +107,8 @@ const heroContent = document.getElementById('hero-content');
 const whatsappFloating = document.querySelector('.whatsapp-floating');
 const slideKeys = Object.keys(projects);
 const heroIndicators=[...document.querySelectorAll('[data-hero-slide]')];
-let activeSlide=0,heroVisible=true,frame=null,started=performance.now(),elapsed=0;
-const duration=8000;
+let activeSlide=0,activePhoto=0,heroVisible=true,frame=null,started=performance.now(),elapsed=0;
+const imageDuration=6000;
 
 const menuLinks=[...document.querySelectorAll('.desktop-nav a,.mobile-nav a')];
 const menuSections=[...document.querySelectorAll('.desktop-nav a')].map(link=>document.querySelector(link.getAttribute('href')));
@@ -135,10 +138,13 @@ function shouldRun(){return heroVisible&&!document.hidden&&!reducedMotion.matche
 function progressFrame(now){
   frame=null;
   if(!shouldRun())return;
-  elapsed=Math.min(duration,now-started);
+  const duration=projects[slideKeys[activeSlide]].heroPhotos.length*imageDuration;
+  elapsed=Math.max(0,Math.min(duration,now-started));
   document.querySelector(`[data-slide="${activeSlide}"] .slide-progress`).style.transform=`scaleX(${elapsed/duration})`;
   heroIndicators[activeSlide].querySelector('.hero-indicator-progress').style.transform=`scaleY(${elapsed/duration})`;
   if(elapsed>=duration){showSlide(activeSlide+1);return;}
+  const photo=Math.floor(elapsed/imageDuration);
+  if(photo!==activePhoto)showHeroPhoto(photo);
   frame=requestAnimationFrame(progressFrame);
 }
 function schedule(){
@@ -148,22 +154,30 @@ function schedule(){
 }
 function restartImage(){
   heroImage.classList.remove('gently-moving');
+  heroImage.style.animationDuration=`${imageDuration}ms`;
   if(!reducedMotion.matches){void heroImage.offsetWidth;heroImage.classList.add('gently-moving');}
 }
-function showSlide(next){
-  activeSlide=(next+slideKeys.length)%slideKeys.length;const key=slideKeys[activeSlide],project=projects[key];
+function showHeroPhoto(index){
+  activePhoto=index;
+  const [source,description]=projects[slideKeys[activeSlide]].heroPhotos[index];
   const backdrop=document.getElementById('hero-backdrop');
   backdrop.getAnimations().forEach(animation=>animation.cancel());
   backdrop.src=heroImage.src;
   backdrop.style.opacity=reducedMotion.matches?'0':'1';
   const fadeBackdrop=()=>{
-    if(heroImage.getAttribute('src')!==project.hero)return;
+    if(heroImage.getAttribute('src')!==source)return;
     if(!reducedMotion.matches)backdrop.animate([{opacity:1},{opacity:0}],{duration:1000,easing:'cubic-bezier(.2,.7,.2,1)'});
     backdrop.style.opacity='0';
   };
   heroImage.onload=fadeBackdrop;
-  heroImage.src=project.hero;heroImage.alt=project.heroAlt;
+  heroImage.src=source;heroImage.alt=description;
   if(heroImage.complete)fadeBackdrop();
+  restartImage();
+  heroImage.style.animationPlayState=shouldRun()?'running':'paused';
+}
+function showSlide(next){
+  activeSlide=(next+slideKeys.length)%slideKeys.length;const key=slideKeys[activeSlide],project=projects[key];
+  showHeroPhoto(0);
   const text={ 'hero-title':project.name,'hero-city':`${project.district} · ${project.city}`,'hero-tagline':project.tagline,'hero-area':project.area,'hero-area-label':project.areaLabel,'hero-rooms':project.rooms,'hero-extra':project.extra,'hero-cta-label':`Conheça o ${project.name}`,'slide-count':`0${activeSlide+1} / 02` };
   Object.entries(text).forEach(([id,value])=>document.getElementById(id).textContent=value);
   document.getElementById('hero-cta').dataset.project=key;
@@ -171,7 +185,7 @@ function showSlide(next){
   document.querySelectorAll('[data-slide]').forEach(button=>{button.setAttribute('aria-pressed',String(Number(button.dataset.slide)===activeSlide));button.querySelector('.slide-progress').style.transform='scaleX(0)';});
   heroIndicators.forEach((button,index)=>{button.setAttribute('aria-pressed',String(index===activeSlide));button.querySelector('.hero-indicator-progress').style.transform='scaleY(0)';});
   if(!reducedMotion.matches)heroContent.animate([{opacity:.35,transform:'translateX(16px)'},{opacity:1,transform:'translateX(0)'}],{duration:420,easing:'ease-out'});
-  elapsed=0;restartImage();schedule();
+  elapsed=0;schedule();
 }
 document.querySelectorAll('[data-slide]').forEach(button=>button.addEventListener('click',()=>showSlide(Number(button.dataset.slide))));
 heroIndicators.forEach(button=>button.addEventListener('click',()=>showSlide(Number(button.dataset.heroSlide))));
