@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="description" content="Conheça a Merhy Engenharia e seus empreendimentos residenciais em Ponta Grossa e Guaratuba.">
+  <title>Merhy Engenharia — Espaços para viver sua história</title>
+  <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#conteudo">Ir para o conteúdo</a>
+  <header class="site-header" id="site-header">
+    <a class="brand" href="#inicio" aria-label="Merhy Engenharia — início"><img src="assets/logo.svg" alt="Merhy Engenharia" width="150" height="53"></a>
+    <nav class="desktop-nav" aria-label="Menu principal">
+      <a href="#inicio" aria-current="location">Início</a><a href="#lancamentos">Empreendimentos</a><a href="#a-merhy">A Merhy</a><a href="#portfolio">Obras entregues</a><a href="#blog">Blog</a>
+      <a class="nav-contact" href="#contato">Vamos conversar</a>
+    </nav>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-nav" aria-label="Abrir menu"><span></span><span></span></button>
+  </header>
+  <nav class="mobile-nav" id="mobile-nav" aria-label="Menu para celular" hidden><a href="#inicio" aria-current="location">Início</a><a href="#lancamentos">Empreendimentos</a><a href="#a-merhy">A Merhy</a><a href="#portfolio">Obras entregues</a><a href="#blog">Blog</a><a href="#contato">Vamos conversar</a></nav>
+  <main id="conteudo">
+    <section class="hero" id="inicio" aria-label="Empreendimentos em lançamento" aria-roledescription="carrossel">
+      <div class="hero-scene">
+        <img id="hero-image" class="hero-image" src="assets/sunview-varanda.webp" alt="Sala-varanda integrada do Sunview" fetchpriority="high" width="1600" height="900">
+        <video id="hero-video" class="hero-video" muted playsinline loop preload="none" hidden aria-label="Vídeo do empreendimento"></video>
+        <img class="hero-backdrop" id="hero-backdrop" src="assets/sunview-varanda.webp" alt="" aria-hidden="true" width="1600" height="900"><div class="hero-shade"></div>
+        <div class="hero-content" id="hero-content" role="group" aria-roledescription="slide" aria-label="1 de 2: Sunview">
+          <div class="hero-intro"><p class="eyebrow hero-eyebrow">Lançamento <span class="tiny-line" aria-hidden="true"></span><span id="hero-city">Vila Estrela · Ponta Grossa</span></p>
+          <h1 id="hero-title">Sunview</h1>
+          <p class="hero-tagline" id="hero-tagline">Amplitude para viver cada momento.</p>
+          </div><div class="hero-details">
+          <div class="hero-facts"><p><strong id="hero-area">189 m²</strong><span id="hero-area-label">de área útil</span></p><p><strong id="hero-rooms">3 suítes</strong><span id="hero-extra">2 vagas de garagem</span></p></div>
+          <button class="button button-white" id="hero-cta" data-project="sunview" type="button"><span id="hero-cta-label">Conheça o Sunview</span><span aria-hidden="true">↗</span></button>
+          </div>
+        </div>
+        <nav class="hero-indicators" aria-label="Selecionar slide da abertura">
+          <button type="button" data-hero-slide="0" aria-label="Exibir Sunview" aria-pressed="true"><span class="hero-indicator-track" aria-hidden="true"><span class="hero-indicator-progress"></span></span></button>
+          <button type="button" data-hero-slide="1" aria-label="Exibir Santa Helena" aria-pressed="false"><span class="hero-indicator-track" aria-hidden="true"><span class="hero-indicator-progress"></span></span></button>
+        </nav>
+        <a class="hero-scroll" href="#lancamentos" aria-label="Ver lançamentos abaixo"><span aria-hidden="true">↓</span></a>
+      </div>
+      <div class="hero-bar"><div class="hero-bar-inner container">
+        <div class="project-selector" aria-label="Selecionar empreendimento">
+          <button type="button" class="project-selector-item" data-slide="0" aria-pressed="true"><span class="selector-number">01</span><span><strong>Sunview</strong><small>Ponta Grossa</small></span><span class="slide-progress" aria-hidden="true"></span></button>
+          <button type="button" class="project-selector-item" data-slide="1" aria-pressed="false"><span class="selector-number">02</span><span><strong>Santa Helena</strong><small>Guaratuba</small></span><span class="slide-progress" aria-hidden="true"></span></button>
+        </div>
+        <div class="carousel-controls"><span id="slide-count" aria-live="off">01 / 02</span><button class="round-button" id="previous-slide" type="button" aria-label="Empreendimento anterior"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M19 12H5m6-6-6 6 6 6"/></svg></button><button class="round-button" id="next-slide" type="button" aria-label="Próximo empreendimento"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></button><button class="round-button pause-button" id="pause-carousel" type="button" aria-label="Pausar carrossel" aria-pressed="true"><span class="pause-symbol" aria-hidden="true">Ⅱ</span></button></div>
+      </div></div>
+    </section>
+
+    <section class="launches section container" id="lancamentos">
+      <div class="section-heading reveal"><div><p class="eyebrow">Nossos lançamentos</p><h2>Dois destinos.<br>Novas possibilidades.</h2></div><p>Projetos para diferentes momentos.<br>O cuidado da Merhy em cada detalhe.</p></div>
+      <div class="launch-grid">
+        <article class="launch-card reveal"><div class="launch-image"><img src="assets/sunview-fachada.webp" alt="Fachada completa do Sunview" width="1280" height="1600" loading="lazy"><span class="city-label">Ponta Grossa</span></div><div class="launch-title"><div><p class="eyebrow">Vila Estrela</p><h3>Sunview</h3></div></div><div class="launch-facts"><span>189 m² de área útil</span><span>3 suítes · 2 vagas</span></div><p class="launch-description">Sala-varanda de 39 m², ambientes integrados<br>e espaço para viver cada momento.</p><button class="launch-card-action" type="button" data-project="sunview" aria-label="Conhecer o empreendimento Sunview"></button></article>
+        <article class="launch-card reveal"><div class="launch-image"><img src="assets/santa-helena-fachada.webp" alt="Fachada completa do Santa Helena" width="1236" height="1600" loading="lazy"><span class="city-label">Guaratuba</span></div><div class="launch-title"><div><p class="eyebrow">Praia Central</p><h3>Santa Helena</h3></div></div><div class="launch-facts"><span>117 e 135 m² privativos</span><span>Até 3 suítes</span></div><p class="launch-description">Living, cozinha e varanda integrados.<br>Novas possibilidades para viver o litoral.</p><button class="launch-card-action" type="button" data-project="santa-helena" aria-label="Conhecer o empreendimento Santa Helena"></button></article>
+      </div>
+    </section>
+
+    <section class="about section" id="a-merhy">
+      <svg class="brand-contour" viewBox="60 65 66 66" aria-hidden="true" focusable="false"><path d="M 90.375 100.460938 C 90.679688 111.335938 81.675781 121.988281 81.675781 121.988281 L 104.667969 121.988281 C 104.667969 121.988281 95.664062 111.335938 95.96875 100.460938 C 95.96875 100.460938 101.066406 91.5 117.84375 92.242188 L 100.414062 72.808594 C 100.414062 72.808594 102.488281 85.285156 93.164062 94.707031 C 83.855469 85.285156 85.929688 72.808594 85.929688 72.808594 L 68.5 92.242188 C 85.28125 91.5 90.375 100.460938 90.375 100.460938 "/></svg>
+      <div class="container about-grid">
+        <figure class="about-image reveal"><img src="assets/sunview-detalhe.webp" alt="Detalhe da arquitetura do Sunview, empreendimento da Merhy" width="1280" height="1600" loading="lazy"><figcaption>Arquitetura Merhy · Sunview</figcaption><span class="image-side-label" aria-hidden="true">Engenharia que faz parte da vida.</span></figure>
+        <div class="about-content reveal"><p class="eyebrow">A Merhy</p><h2>Uma história de engenharia.<br>Uma nova forma de viver.</h2><p>A Merhy dá continuidade a mais de 40 anos de tradição na engenharia, desenvolvendo e construindo empreendimentos residenciais que unem espaços generosos, funcionalidade e cuidado com os acabamentos.</p><p>Uma empresa familiar, criada pelo engenheiro Ricardo Merhy e seus filhos, Rodrigo e Hayglon. Uma trajetória construída com equipe própria, diálogo próximo e atenção a quem escolhe viver em um Merhy.</p><button class="text-link" type="button" data-story>Conheça nossa história</button><div class="about-signature"><span class="signature-line"></span><span>Do projeto à vida que acontece nele.</span></div></div>
+      </div>
+      <div class="container stats reveal"><div><strong aria-label="Mais de 40 anos de tradição na engenharia"><span class="stat-number" data-count="40" aria-hidden="true">40</span><span aria-hidden="true">+</span></strong><span>Anos de tradição na engenharia</span></div><div><strong aria-label="23"><span class="stat-number" data-count="23" aria-hidden="true">23</span></strong><span>Prédios entregues em Ponta Grossa</span></div><div><strong aria-label="Mais de 600"><span class="stat-number" data-count="600" aria-hidden="true">600</span><span aria-hidden="true">+</span></strong><span>Famílias em nossos empreendimentos</span></div></div>
+    </section>
+
+    <section class="values section container" id="diferenciais">
+      <div class="values-layout">
+        <div class="values-editorial">
+          <div class="values-heading reveal"><p class="eyebrow">Nosso jeito de construir</p><h2>O valor está<br>em cada detalhe.</h2><p>Uma boa experiência de morar começa<br>muito antes da mudança.</p></div>
+          <figure class="values-picture reveal"><img src="assets/sunview-hall.webp" alt="Hall de entrada do Sunview, com materiais e acabamentos do projeto" width="1280" height="1600" loading="lazy"><figcaption>Sunview · Hall de entrada</figcaption></figure>
+        </div>
+        <div class="values-list">
+          <article class="value reveal"><span class="value-number">01</span><h3>Qualidade que<br>você percebe.</h3><p>Materiais de primeira linha, cuidado na construção e atenção aos acabamentos, do seu apartamento aos espaços comuns.</p></article>
+          <article class="value reveal"><span class="value-number">02</span><h3>Espaço para<br>a sua rotina.</h3><p>Projetos com dimensionamento generoso e ambientes funcionais, pensados para a vida que acontece todos os dias.</p></article>
+          <article class="value reveal"><span class="value-number">03</span><h3>Diálogo para<br>encontrar caminhos.</h3><p>Atendimento próximo e flexibilidade nas negociações para conversar sobre o imóvel e suas possibilidades.</p></article>
+          <article class="value reveal"><span class="value-number">04</span><h3>Uma relação<br>que continua.</h3><p>Compromisso com os prazos e apoio aos moradores após a entrega. O cuidado da Merhy acompanha cada etapa.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="living section" id="espacos">
+      <div class="living-scroll"><div class="living-stage">
+        <div class="living-heading container reveal"><p class="eyebrow">Espaços para viver mais</p><h2>Tempo para<br>o que <span>importa.</span></h2><p>O encontro, a pausa, o convívio.<br>Uma arquitetura que abre espaço para a vida.</p></div>
+        <figure class="living-scene scene-pool" data-drift="-65"><button type="button" data-scene="pool" aria-label="Ampliar Sunview · Piscina e convivência"><img src="assets/sunview-piscina.webp" alt="Sunview · Piscina e convivência" width="1600" height="900" loading="lazy"></button><figcaption>Sunview · Piscina e convivência</figcaption></figure>
+        <figure class="living-scene scene-terrace" data-drift="55"><button type="button" data-scene="terrace" aria-label="Ampliar Sunview · Sala-varanda"><img src="assets/sunview-varanda.webp" alt="Sunview · Sala-varanda" width="1600" height="900" loading="lazy"></button><figcaption>Sunview · Sala-varanda</figcaption></figure>
+        <figure class="living-scene scene-home" data-drift="-35"><button type="button" data-scene="home" aria-label="Ampliar Santa Helena · Living integrado"><img src="assets/santa-helena-living.webp" alt="Santa Helena · Living integrado" width="1600" height="900" loading="lazy"></button><figcaption>Santa Helena · Living integrado</figcaption></figure>
+        <figure class="living-scene scene-coast" data-drift="45"><button type="button" data-scene="coast" aria-label="Ampliar Santa Helena · Lazer"><img src="assets/santa-helena-piscina.webp" alt="Santa Helena · Lazer" width="1600" height="900" loading="lazy"></button><figcaption>Santa Helena · Lazer</figcaption></figure>
+        <figure class="living-scene scene-interior" data-drift="-45"><button type="button" data-scene="interior" aria-label="Ampliar Sunview · Ambientes integrados"><img src="assets/sunview-living.webp" alt="Sunview · Ambientes integrados" width="1600" height="900" loading="lazy"></button><figcaption>Sunview · Ambientes integrados</figcaption></figure>
+      </div>
+      </div>
+      <div class="living-bottom container reveal"><p>Ambientes dos nossos lançamentos.<br><span class="living-note">Clique nas imagens para explorar.</span></p><button class="text-link" type="button" data-gallery>Explore todos os ambientes</button></div>
+    </section>
+
+    <section class="portfolio section" id="portfolio">
+      <div class="section-heading container reveal"><div><p class="eyebrow">Obras entregues</p><h2>Parte da cidade.<br>Parte de muitas histórias.</h2></div><div class="portfolio-intro"><p>16 empreendimentos do nosso acervo.<br>Conheça essa trajetória em Ponta Grossa.</p><div class="portfolio-controls"><button class="round-button" type="button" id="portfolio-prev" aria-label="Obras anteriores"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M19 12H5m6-6-6 6 6 6"/></svg></button><button class="round-button" type="button" id="portfolio-next" aria-label="Próximas obras"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></button></div></div></div>
+      <div class="portfolio-track" id="portfolio-track" aria-label="Galeria das 16 obras identificadas no acervo">
+        <article class="portfolio-card"><div class="portfolio-image"><img src="assets/portfolio/gran-villaggio-ia-v2.webp" alt="Gran Villaggio, imagem do acervo da Merhy" width="1122" height="1402" loading="lazy"></div><p class="eyebrow">Ponta Grossa</p><h3>Gran Villaggio</h3><button class="portfolio-card-action" type="button" data-work="gran-villaggio" aria-label="Ver empreendimento Gran Villaggio"></button></article>
+        <article class="portfolio-card"><div class="portfolio-image"><img src="assets/portfolio/valencia-ia-v2.webp" alt="Valencia, imagem do acervo da Merhy" width="1122" height="1402" loading="lazy"></div><p class="eyebrow">Ponta Grossa</p><h3>Valencia</h3><button class="portfolio-card-action" type="button" data-work="valencia" aria-label="Ver empreendimento Valencia"></button></article>
+        <article class="portfolio-card"><div class="portfolio-image"><img src="assets/portfolio/portland-ia-v2.webp" alt="Portland, imagem do acervo da Merhy" width="1122" height="1402" loading="lazy"></div><p class="eyebrow">Ponta Grossa</p><h3>Portland</h3><button class="portfolio-card-action" type="button" data-work="portland" aria-label="Ver empreendimento Portland"></button></article>
+        <article class="portfolio-card"><div class="portfolio-image"><img src="assets/portfolio/san-francisco-ia-v2.webp" alt="San Francisco, imagem do acervo da Merhy" width="1122" height="1402" loading="lazy"></div><p class="eyebrow">Ponta Grossa</p><h3>San Francisco</h3><button class="portfolio-card-action" type="button" data-work="san-francisco" aria-label="Ver empreendimento San Francisco"></button></article>
+        <article class="portfolio-card"><div class="portfolio-image"><img src="assets/portfolio/gran-torino-ia-v2.webp" alt="Gran Torino, imagem do acervo da Merhy" width="1122" height="1402" loading="lazy"></div><p class="eyebrow">Ponta Grossa</p><h3>Gran Torino</h3><button class="portfolio-card-action" type="button" data-work="gran-torino" aria-label="Ver empreendimento Gran Torino"></button></article>
+        <article class="portfolio-card"><div class="portfolio-image"><img src="assets/portfolio/gran-piazza-ia-v2.webp" alt="Gran Piazza, imagem do acervo da Merhy" width="1122" height="1402" loading="lazy"></div><p class="eyebrow">Ponta Grossa</p><h3>Gran Piazza</h3><button class="portfolio-card-action" type="button" data-work="gran-piazza" aria-label="Ver empreendimento Gran Piazza"></button></article>
+        <article class="portfolio-card"><div class="portfolio-image"><img src="assets/portfolio/munich-ia-v2.webp" alt="Munich, imagem do acervo da Merhy" width="1122" height="1402" loading="lazy"></div><p class="eyebrow">Ponta Grossa</p><h3>Munich</h3><button class="portfolio-card-action" type="button" data-work="munich" aria-label="Ver empreendimento Munich"></button></article>
+        <article class="portfolio-card"><div class="portfolio-image"><img src="assets/portfolio/rotterdam-ia-v2.webp" alt="Rotterdam, imagem do acervo da Merhy" width="1122" height="1402" loading="lazy"></div><p class="eyebrow">Ponta Grossa</p><h3>Rotterdam</h3><button class="portfolio-card-action" type="button" data-work="rotterdam" aria-label="Ver empreendimento Rotterdam"></button></article>
+        <article class="portfolio-card"><div class="portfolio-image"><img src="assets/portfolio/dakota-ia-v2.webp" alt="Dakota, imagem do acervo da Merhy" width="1122" height="1402" loading="lazy"></div><p class="eyebrow">Ponta Grossa</p><h3>Dakota</h3><button class="portfolio-card-action" type="button" data-work="dakota" aria-label="Ver empreendimento Dakota"></button></article>
+        <article class="portfolio-card"><div class="portfolio-image"><img src="assets/portfolio/san-germain-ia-v2.webp" alt="San Germain, imagem do acervo da Merhy" width="1122" height="1402" loading="lazy"></div><p class="eyebrow">Ponta Grossa</p><h3>San Germain</h3><button class="portfolio-card-action" type="button" data-work="san-germain" aria-label="Ver empreendimento San Germain"></button></article>
+        <article class="portfolio-card"><div class="portfolio-image"><img src="assets/portfolio/torre-di-lucca-ia-v2.webp" alt="Torre di Lucca, imagem do acervo da Merhy" width="1122" height="1402" loading="lazy"></div><p class="eyebrow">Ponta Grossa</p><h3>Torre di Lucca</h3><button class="portfolio-card-action" type="button" data-work="torre-di-lucca" aria-label="Ver empreendimento Torre di Lucca"></button></article>
+        <article class="portfolio-card"><div class="portfolio-image"><img src="assets/portfolio/san-lorenzo-ia-v2.webp" alt="San Lorenzo, imagem do acervo da Merhy" width="1122" height="1402" loading="lazy"></div><p class="eyebrow">Ponta Grossa</p><h3>San Lorenzo</h3><button class="portfolio-card-action" type="button" data-work="san-lorenzo" aria-label="Ver empreendimento San Lorenzo"></button></article>
+        <article class="portfolio-card"><div class="portfolio-image"><img src="assets/portfolio/montreal-ia-v2.webp" alt="Montreal, imagem do acervo da Merhy" width="1122" height="1402" loading="lazy"></div><p class="eyebrow">Ponta Grossa</p><h3>Montreal</h3><button class="portfolio-card-action" type="button" data-work="montreal" aria-label="Ver empreendimento Montreal"></button></article>
+        <article class="portfolio-card"><div class="portfolio-image"><img src="assets/portfolio/firenze-ia-v2.webp" alt="Firenze, imagem do acervo da Merhy" width="1122" height="1402" loading="lazy"></div><p class="eyebrow">Ponta Grossa</p><h3>Firenze</h3><button class="portfolio-card-action" type="button" data-work="firenze" aria-label="Ver empreendimento Firenze"></button></article>
+        <article class="portfolio-card"><div class="portfolio-image"><img src="assets/portfolio/san-sebastian-ia-v2.webp" alt="San Sebastian, imagem do acervo da Merhy" width="1122" height="1402" loading="lazy"></div><p class="eyebrow">Ponta Grossa</p><h3>San Sebastian</h3><button class="portfolio-card-action" type="button" data-work="san-sebastian" aria-label="Ver empreendimento San Sebastian"></button></article>
+        <article class="portfolio-card"><div class="portfolio-image"><img src="assets/portfolio/monte-carlo-ia-v2.webp" alt="Monte Carlo, imagem do acervo da Merhy" width="1122" height="1402" loading="lazy"></div><p class="eyebrow">Ponta Grossa</p><h3>Monte Carlo</h3><button class="portfolio-card-action" type="button" data-work="monte-carlo" aria-label="Ver empreendimento Monte Carlo"></button></article>
+      </div>
+      <div class="portfolio-bottom container reveal"><p>Cada entrega amplia uma história que continua com os moradores.</p><button class="text-link" type="button" data-all-works>Ver todas as 16 obras</button></div>
+    </section>
+
+    <section class="journal section container" id="blog">
+      <div class="section-heading reveal"><div><p class="eyebrow">Blog Merhy</p><h2>Ideias para<br>viver melhor.</h2></div><p>Arquitetura, espaços e escolhas.<br><span class="sample-note">Conteúdos demonstrativos.</span></p></div>
+      <div class="journal-grid">
+        <article class="journal-card reveal"><button class="image-button" type="button" data-article="espacos-integrados"><img src="assets/sunview-living.webp" alt="Ambientes integrados do Sunview" width="1600" height="900" loading="lazy"></button><p class="eyebrow">Arquitetura · Artigo de exemplo</p><h3><button type="button" data-article="espacos-integrados">Espaços integrados: uma nova relação com a casa.</button></h3><button class="text-link" type="button" data-article="espacos-integrados">Ler artigo</button></article>
+        <article class="journal-card reveal"><button class="image-button" type="button" data-article="localizacao"><img src="assets/sunview-detalhe.webp" alt="Arquitetura do Sunview e seu contexto urbano" width="1280" height="1600" loading="lazy"></button><p class="eyebrow">Escolhas · Artigo de exemplo</p><h3><button type="button" data-article="localizacao">Como olhar para a localização do seu próximo imóvel.</button></h3><button class="text-link" type="button" data-article="localizacao">Ler artigo</button></article>
+        <article class="journal-card reveal"><button class="image-button" type="button" data-article="areas-comuns"><img src="assets/santa-helena-piscina.webp" alt="Área de piscina do Santa Helena" width="1600" height="900" loading="lazy"></button><p class="eyebrow">Bem-estar · Artigo de exemplo</p><h3><button type="button" data-article="areas-comuns">Áreas comuns que fazem parte dos seus dias.</button></h3><button class="text-link" type="button" data-article="areas-comuns">Ler artigo</button></article>
+      </div>
+    </section>
+
+    <section class="contact section" id="contato">
+      <svg class="brand-contour" viewBox="60 65 66 66" aria-hidden="true" focusable="false"><path d="M 90.375 100.460938 C 90.679688 111.335938 81.675781 121.988281 81.675781 121.988281 L 104.667969 121.988281 C 104.667969 121.988281 95.664062 111.335938 95.96875 100.460938 C 95.96875 100.460938 101.066406 91.5 117.84375 92.242188 L 100.414062 72.808594 C 100.414062 72.808594 102.488281 85.285156 93.164062 94.707031 C 83.855469 85.285156 85.929688 72.808594 85.929688 72.808594 L 68.5 92.242188 C 85.28125 91.5 90.375 100.460938 90.375 100.460938 "/></svg>
+      <div class="container contact-grid">
+        <div class="contact-copy reveal"><p class="eyebrow">Vamos conversar</p><h2>Seu próximo capítulo<br>começa <span>aqui.</span></h2><p>Conte o que você procura. Nossa equipe está à disposição para apresentar os empreendimentos e conversar sobre as possibilidades.</p><a class="button button-white" href="https://wa.me/5542988039529" target="_blank" rel="noopener">Fale pelo WhatsApp</a><div class="contact-details"><a href="tel:+5542988039529">(42) 98803-9529</a><a href="mailto:merhy.mkt@gmail.com">merhy.mkt@gmail.com</a><p>Rua Emílio de Menezes, 897<br>Oficinas · Ponta Grossa · PR</p></div></div>
+        <form class="contact-form reveal" id="contact-form"><h3>Como podemos ajudar?</h3><label for="contact-name">Seu nome<input id="contact-name" name="name" autocomplete="name" placeholder="Como você gostaria de ser chamado?" required></label><div class="form-row"><label for="contact-email">E-mail<input id="contact-email" name="email" type="email" autocomplete="email" placeholder="voce@exemplo.com" required></label><label for="contact-phone">Telefone<input id="contact-phone" name="phone" type="tel" autocomplete="tel" placeholder="(00) 00000-0000"></label></div><label for="contact-interest">Tenho interesse em<select id="contact-interest" name="interest"><option value="">Selecione uma opção</option><option>Sunview · Ponta Grossa</option><option>Santa Helena · Guaratuba</option><option>Outras informações</option></select></label><label for="contact-message">Sua mensagem<textarea id="contact-message" name="message" rows="3" placeholder="Conte um pouco sobre o que você procura."></textarea></label><button class="button button-blue" type="submit">Enviar mensagem</button><p class="form-feedback" id="form-feedback" role="status"></p></form>
+      </div>
+    </section>
+  </main>
+  <footer class="site-footer">
+    <svg class="brand-contour" viewBox="60 65 66 66" aria-hidden="true" focusable="false"><path d="M 90.375 100.460938 C 90.679688 111.335938 81.675781 121.988281 81.675781 121.988281 L 104.667969 121.988281 C 104.667969 121.988281 95.664062 111.335938 95.96875 100.460938 C 95.96875 100.460938 101.066406 91.5 117.84375 92.242188 L 100.414062 72.808594 C 100.414062 72.808594 102.488281 85.285156 93.164062 94.707031 C 83.855469 85.285156 85.929688 72.808594 85.929688 72.808594 L 68.5 92.242188 C 85.28125 91.5 90.375 100.460938 90.375 100.460938 "/></svg>
+    <div class="container footer-intro">
+      <div class="footer-brand"><a href="#inicio" aria-label="Merhy Engenharia — voltar ao início"><img src="assets/logo.svg" alt="Merhy Engenharia" width="185" height="66"></a><p class="footer-description">Engenharia, espaços generosos e cuidado em cada detalhe. Mais de 40 anos de tradição na engenharia, em uma história que continua na Merhy.</p></div>
+      <div class="footer-address"><h2>Encontre a Merhy</h2><address>Rua Emílio de Menezes, 897<br>Oficinas · Ponta Grossa · PR</address></div>
+    </div>
+    <div class="container footer-service">
+      <div class="footer-service-heading"><h2>Conte com<br>a nossa equipe.</h2></div>
+      <a class="footer-contact-card" href="https://wa.me/5542988039529" target="_blank" rel="noopener"><h3>Converse pelo WhatsApp</h3><strong>(42) 98803-9529</strong></a>
+      <a class="footer-contact-card" href="tel:+5542988039529"><h3>Prefere ligar?</h3><strong>(42) 98803-9529</strong></a>
+      <a class="footer-contact-card" href="mailto:merhy.mkt@gmail.com"><h3>Envie um e-mail</h3><strong>merhy.mkt@gmail.com</strong></a>
+    </div>
+    <div class="container footer-navigation">
+      <nav class="footer-column" aria-label="Institucional no rodapé"><h2>A Merhy</h2><a href="#a-merhy">Nossa história</a><a href="#diferenciais">Nosso jeito de construir</a><a href="#espacos">Espaços para viver</a><a href="#blog">Blog Merhy</a><a href="#contato">Fale conosco</a></nav>
+      <nav class="footer-column" aria-label="Lançamentos no rodapé"><h2>Lançamentos</h2><button type="button" data-project="sunview">Sunview<small>Vila Estrela · Ponta Grossa</small></button><button type="button" data-project="santa-helena">Santa Helena<small>Praia Central · Guaratuba</small></button><a href="#lancamentos">Conheça os lançamentos</a></nav>
+      <nav class="footer-column" aria-label="Obras entregues no rodapé"><h2>Obras entregues</h2><button type="button" data-work="gran-villaggio">Gran Villaggio</button><button type="button" data-work="valencia">Valencia</button><button type="button" data-work="portland">Portland</button><button type="button" data-work="san-francisco">San Francisco</button><a href="#portfolio">Explore nosso portfólio</a></nav>
+      <nav class="footer-column footer-social-links" aria-label="Redes sociais da Merhy"><h2>Acompanhe a Merhy</h2><a href="https://www.instagram.com/merhy_engenharia/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".65" fill="currentColor" stroke="none"/></svg><span>Instagram</span></a><a href="https://www.facebook.com/merhyengenharia/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 21v-8h3l.5-4H14V7c0-1.1.4-1.5 1.5-1.5H18V2h-3c-3 0-5 1.8-5 5v2H7v4h3v8z"/></svg><span>Facebook</span></a><a href="https://www.youtube.com/@merhyengenharia3236" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="2.5" y="5.5" width="19" height="13" rx="4"/><path d="m10 9 5 3-5 3z"/></svg><span>YouTube</span></a><a href="https://www.linkedin.com/company/merhy-engenharia" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="9" width="3.5" height="12"/><circle cx="4.75" cy="4.75" r="1.75"/><path d="M10 21V9h3.5v1.8c.8-1.2 1.8-2 3.3-2 2.7 0 4.2 1.8 4.2 4.8V21h-3.5v-6.5c0-1.8-.7-2.7-1.9-2.7s-2.1 1-2.1 2.7V21z"/></svg><span>LinkedIn</span></a></nav>
+    </div>
+    <div class="container footer-bottom"><span>© 2026 Merhy Engenharia. Todos os direitos reservados.</span><a href="#inicio" class="back-top">Voltar ao topo ↑</a></div>
+  </footer>
+  <a class="whatsapp-floating" href="https://wa.me/5542988039529" target="_blank" rel="noopener" aria-label="Conversar com a Merhy pelo WhatsApp (abre em nova aba)">
+    <span class="whatsapp-floating-label" aria-hidden="true">Fale com a Merhy</span>
+    <span class="whatsapp-floating-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20.5 11.8a8.5 8.5 0 0 1-12.6 7.5L3 20.8l1.5-4.7a8.5 8.5 0 1 1 16-4.3Z"/><path d="m8.3 7.1 1.5 2.7-1 1a9.2 9.2 0 0 0 4.4 4.2l1-1.1 2.6 1.4c-.2 1.3-1.3 2.1-2.6 1.8-4.1-.9-7.2-4-8-7.9-.3-1.1.7-2.1 2.1-2.1Z"/></svg></span>
+  </a>
+  <dialog class="detail-dialog" id="detail-dialog" aria-labelledby="dialog-title"><button type="button" class="dialog-close" aria-label="Fechar detalhes">×</button><div id="dialog-content"></div></dialog>
+</body>
+</html>
