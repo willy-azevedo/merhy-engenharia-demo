@@ -269,8 +269,9 @@
 @media(max-width:800px){.brand img{width:126px}}
 @media(max-width:600px){.brand img{width:115px}}
 
-/* Contato persistente no canto inferior direito. */
-.whatsapp-floating{position:fixed;right:max(24px,env(safe-area-inset-right));bottom:calc(24px + env(safe-area-inset-bottom));z-index:35;width:56px;height:56px;border-radius:50%;color:#fff}
+/* Contato flutuante disponível após a abertura. */
+.whatsapp-floating{position:fixed;right:max(24px,env(safe-area-inset-right));bottom:calc(24px + env(safe-area-inset-bottom));z-index:35;width:56px;height:56px;border-radius:50%;color:#fff;opacity:0;visibility:hidden;pointer-events:none;translate:0 8px;transition:opacity .25s,translate .25s,visibility .25s}
+.whatsapp-floating.is-visible{opacity:1;visibility:visible;pointer-events:auto;translate:0 0}
 .whatsapp-floating-icon{position:relative;isolation:isolate;overflow:hidden;display:grid;place-items:center;width:100%;height:100%;background:var(--blue);border:1px solid #ffffff55;border-radius:50%;box-shadow:0 5px 22px #041b3130}
 .whatsapp-floating-icon:before{content:'';position:absolute;inset:0;z-index:-1;background:#286789;transform:scaleX(0);transform-origin:left;transition:transform .45s cubic-bezier(.2,.7,.2,1)}
 .whatsapp-floating:hover .whatsapp-floating-icon:before,.whatsapp-floating:focus-visible .whatsapp-floating-icon:before{transform:scaleX(1)}
@@ -284,17 +285,15 @@
 /* Abertura mobile em tela inteira, com controles sobre a imagem. */
 @media(max-width:600px){
  .hero{position:relative;--mobile-hero-height:max(100svh,560px)}
- .hero-scene{height:var(--mobile-hero-height);min-height:560px;max-height:none;padding-bottom:calc(164px + env(safe-area-inset-bottom))}
+ .hero-scene{height:var(--mobile-hero-height);min-height:560px;max-height:none;padding-bottom:calc(84px + env(safe-area-inset-bottom))}
  .hero-indicators{display:none}
  .hero-bar{height:72px}
  .hero-bar-inner{flex-wrap:nowrap}
- .hero-bar .carousel-controls{position:absolute;z-index:3;top:calc(var(--mobile-hero-height) - 144px - env(safe-area-inset-bottom));left:6%;right:6%;width:auto;height:44px;padding:0;border:0;gap:10px}
+ .hero-bar .carousel-controls{position:absolute;z-index:3;top:calc(var(--mobile-hero-height) - 64px - env(safe-area-inset-bottom));left:6%;right:6%;width:auto;height:44px;padding:0;border:0;gap:10px}
  .hero-bar .carousel-controls>span{margin-right:auto}
 }
 
-@media(min-width:601px) and (max-width:1333px){
- .hero-bar .carousel-controls{padding-right:calc(92px - 6vw)}
-}
+@media(prefers-reduced-motion:reduce){.whatsapp-floating{transition:none;translate:none}}
 
 
 /* Blog: uma leitura em destaque, acompanhada por duas chamadas menores. */

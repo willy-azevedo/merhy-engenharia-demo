@@ -101,6 +101,7 @@ const mobileNav = document.getElementById('mobile-nav');
 const hero = document.querySelector('.hero');
 const heroImage = document.getElementById('hero-image');
 const heroContent = document.getElementById('hero-content');
+const whatsappFloating = document.querySelector('.whatsapp-floating');
 const slideKeys = Object.keys(projects);
 const heroIndicators=[...document.querySelectorAll('[data-hero-slide]')];
 let activeSlide=0,heroVisible=true,frame=null,started=performance.now(),elapsed=0;
@@ -111,6 +112,7 @@ const menuSections=[...document.querySelectorAll('.desktop-nav a')].map(link=>do
 function updateHeader(){
   header.classList.toggle('scrolled',window.scrollY>56);
   const height=header.offsetHeight;
+  whatsappFloating.classList.toggle('is-visible',hero.getBoundingClientRect().bottom<=height);
   let current=menuSections[0].id;
   menuSections.forEach(section=>{if(section.getBoundingClientRect().top<=height+40)current=section.id;});
   menuLinks.forEach(link=>{if(link.getAttribute('href')===`#${current}`)link.setAttribute('aria-current','location');else link.removeAttribute('aria-current');});
