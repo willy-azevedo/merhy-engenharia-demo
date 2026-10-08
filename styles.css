@@ -197,16 +197,18 @@
  .living-dots button:focus-visible{outline:1px solid white;outline-offset:0;border-radius:50%}
 }
 
-/* Marca e apresentação formam um único bloco, alinhado ao endereço. */
-.footer-intro{grid-template-columns:3.2fr 1.2fr;gap:35px;padding-block:60px 48px}
-.footer-brand{display:grid;grid-template-columns:1.2fr 2fr;gap:35px;align-items:start;grid-row:auto}
+/* As três faixas compartilham as mesmas colunas e espaçamentos. */
+.site-footer{--footer-columns:minmax(0,1.2fr) repeat(2,minmax(0,1fr)) minmax(0,1.2fr);--footer-column-gap:35px}
+.footer-intro,.footer-service,.footer-navigation{grid-template-columns:var(--footer-columns);column-gap:var(--footer-column-gap)}
+.footer-intro{padding-block:60px 48px}
+.footer-brand{display:grid;grid-column:1/span 3;grid-template-columns:minmax(0,1.2fr) repeat(2,minmax(0,1fr));gap:35px;column-gap:var(--footer-column-gap);align-items:start;grid-row:auto}
 .footer-brand>a{display:block;padding-top:2px}
 .footer-brand img{width:185px;max-width:100%}
-.footer-brand .footer-description{font-size:15px;line-height:1.8;letter-spacing:0;margin:0;padding:0;max-width:390px;color:#c7d8e2;text-wrap:pretty}
+.footer-brand .footer-description{grid-column:2/span 2;font-size:15px;line-height:1.8;letter-spacing:0;margin:0;padding:0;max-width:390px;color:#c7d8e2;text-wrap:pretty}
 .footer-address{padding-top:0}
-@media(max-width:1100px){.footer-intro,.footer-brand{gap:25px}.footer-brand img{width:165px}.footer-brand .footer-description{font-size:14px}}
-@media(max-width:800px){.footer-intro{grid-template-columns:1fr 1fr;gap:40px}.footer-brand{display:flex;flex-direction:column;gap:23px}.footer-brand .footer-description{max-width:320px;font-size:13px}}
-@media(max-width:600px){.footer-intro{grid-template-columns:1fr;padding-block:44px 35px;gap:30px}.footer-brand{gap:21px;align-items:flex-start}.footer-brand img{width:150px}.footer-brand .footer-description{max-width:340px;font-size:13px}.footer-address{border-top:1px solid #ffffff28;padding-top:25px}}
+@media(max-width:1100px){.site-footer{--footer-column-gap:25px}.footer-brand img{width:165px}.footer-brand .footer-description{font-size:14px}}
+@media(max-width:800px){.site-footer{--footer-columns:repeat(2,minmax(0,1fr));--footer-column-gap:35px}.footer-brand{grid-column:auto;display:flex;flex-direction:column;gap:23px}.footer-brand .footer-description{grid-column:auto;max-width:320px;font-size:13px}}
+@media(max-width:600px){.site-footer{--footer-column-gap:22px}.footer-intro{grid-template-columns:1fr;padding-block:44px 35px;gap:30px}.footer-brand{gap:21px;align-items:flex-start}.footer-brand img{width:150px}.footer-brand .footer-description{max-width:340px;font-size:13px}.footer-address{border-top:1px solid #ffffff28;padding-top:25px}}
 
 /* A faixa do carrossel continua o gradiente da primeira dobra. */
 .hero-content{max-width:1280px;margin-inline:auto}
