@@ -101,10 +101,9 @@ const mobileNav = document.getElementById('mobile-nav');
 const hero = document.querySelector('.hero');
 const heroImage = document.getElementById('hero-image');
 const heroContent = document.getElementById('hero-content');
-const pauseButton = document.getElementById('pause-carousel');
 const slideKeys = Object.keys(projects);
 const heroIndicators=[...document.querySelectorAll('[data-hero-slide]')];
-let activeSlide=0,playing=!reducedMotion.matches,heroVisible=true,interacting=false,frame=null,started=performance.now(),elapsed=0;
+let activeSlide=0,heroVisible=true,frame=null,started=performance.now(),elapsed=0;
 const duration=8000;
 
 const menuLinks=[...document.querySelectorAll('.desktop-nav a,.mobile-nav a')];
@@ -130,14 +129,7 @@ menuButton.addEventListener('click',()=>setMenu(mobileNav.hidden));
 mobileNav.querySelectorAll('a').forEach(link=>link.addEventListener('click',()=>setMenu(false)));
 document.addEventListener('keydown',event=>{if(event.key==='Escape'&&!mobileNav.hidden){setMenu(false);menuButton.focus();}});
 
-function updatePause(){
-  pauseButton.setAttribute('aria-pressed',String(playing));
-  pauseButton.setAttribute('aria-label',playing?'Pausar carrossel':'Retomar carrossel');
-  pauseButton.querySelector('.pause-icon').toggleAttribute('hidden',!playing);
-  pauseButton.querySelector('.play-icon').toggleAttribute('hidden',playing);
-  document.getElementById('slide-count').setAttribute('aria-live',playing?'off':'polite');
-}
-function shouldRun(){return playing&&heroVisible&&!interacting&&!document.hidden;}
+function shouldRun(){return heroVisible&&!document.hidden&&!reducedMotion.matches&&!document.body.classList.contains('dialog-open');}
 function progressFrame(now){
   frame=null;
   if(!shouldRun())return;
@@ -152,14 +144,12 @@ function schedule(){
   if(shouldRun()){started=performance.now()-elapsed;frame=requestAnimationFrame(progressFrame);}
   heroImage.style.animationPlayState=shouldRun()?'running':'paused';
 }
-function setPlaying(value){playing=value;updatePause();schedule();}
 function restartImage(){
   heroImage.classList.remove('gently-moving');
   if(!reducedMotion.matches){void heroImage.offsetWidth;heroImage.classList.add('gently-moving');}
 }
-function showSlide(next,manual=false){
+function showSlide(next){
   activeSlide=(next+slideKeys.length)%slideKeys.length;const key=slideKeys[activeSlide],project=projects[key];
-  if(manual)playing=false;
   const backdrop=document.getElementById('hero-backdrop');
   backdrop.getAnimations().forEach(animation=>animation.cancel());
   backdrop.src=heroImage.src;
@@ -179,16 +169,12 @@ function showSlide(next,manual=false){
   document.querySelectorAll('[data-slide]').forEach(button=>{button.setAttribute('aria-pressed',String(Number(button.dataset.slide)===activeSlide));button.querySelector('.slide-progress').style.transform='scaleX(0)';});
   heroIndicators.forEach((button,index)=>{button.setAttribute('aria-pressed',String(index===activeSlide));button.querySelector('.hero-indicator-progress').style.transform='scaleY(0)';});
   if(!reducedMotion.matches)heroContent.animate([{opacity:.35,transform:'translateX(16px)'},{opacity:1,transform:'translateX(0)'}],{duration:420,easing:'ease-out'});
-  elapsed=0;restartImage();updatePause();schedule();
+  elapsed=0;restartImage();schedule();
 }
-document.querySelectorAll('[data-slide]').forEach(button=>button.addEventListener('click',()=>showSlide(Number(button.dataset.slide),true)));
-heroIndicators.forEach(button=>button.addEventListener('click',()=>showSlide(Number(button.dataset.heroSlide),true)));
-document.getElementById('previous-slide').addEventListener('click',()=>showSlide(activeSlide-1,true));
-document.getElementById('next-slide').addEventListener('click',()=>showSlide(activeSlide+1,true));
-pauseButton.addEventListener('click',()=>{interacting=false;setPlaying(!playing);});
-heroContent.addEventListener('mouseenter',()=>{interacting=true;schedule();});
-heroContent.addEventListener('mouseleave',()=>{interacting=false;schedule();});
-hero.addEventListener('focusin',event=>{if(event.target!==pauseButton)setPlaying(false);});
+document.querySelectorAll('[data-slide]').forEach(button=>button.addEventListener('click',()=>showSlide(Number(button.dataset.slide))));
+heroIndicators.forEach(button=>button.addEventListener('click',()=>showSlide(Number(button.dataset.heroSlide))));
+document.getElementById('previous-slide').addEventListener('click',()=>showSlide(activeSlide-1));
+document.getElementById('next-slide').addEventListener('click',()=>showSlide(activeSlide+1));
 document.addEventListener('visibilitychange',schedule);
 new IntersectionObserver(entries=>{heroVisible=entries[0].isIntersecting;schedule();},{threshold:.1}).observe(hero);
 
@@ -307,8 +293,9 @@ const dialogContent=document.getElementById('dialog-content');
 let previousFocus=null;
 const closeDialog=()=>dialog.close();
 function openDialog(markup){
-  setPlaying(false);previousFocus=document.activeElement;dialogContent.innerHTML=markup;
+  previousFocus=document.activeElement;dialogContent.innerHTML=markup;
   if(!dialog.open)dialog.showModal();dialog.scrollTop=0;document.body.classList.add('dialog-open');
+  schedule();
   dialog.querySelector('.dialog-close').focus({preventScroll:true});
 }
 function openProject(key){
@@ -333,7 +320,7 @@ dialog.addEventListener('click',event=>{
   const work=event.target.closest('[data-modal-work]');if(work)openWork(work.dataset.modalWork);
 });
 dialog.querySelector('.dialog-close').addEventListener('click',closeDialog);
-dialog.addEventListener('close',()=>{document.body.classList.remove('dialog-open');previousFocus?.focus({preventScroll:true});});
+dialog.addEventListener('close',()=>{document.body.classList.remove('dialog-open');previousFocus?.focus({preventScroll:true});schedule();});
 document.getElementById('contact-form').addEventListener('submit',event=>{event.preventDefault();document.getElementById('form-feedback').textContent='Esta é uma prévia visual do formulário. Nenhuma mensagem foi enviada. Para conversar com a Merhy, use o WhatsApp ou o e-mail ao lado.';});
-reducedMotion.addEventListener('change',()=>{if(reducedMotion.matches){setPlaying(false);heroImage.classList.remove('gently-moving');finishCounters();}updateScroll();});
-updateHeader();updateScroll();restartImage();updatePause();schedule();
+reducedMotion.addEventListener('change',()=>{restartImage();schedule();if(reducedMotion.matches)finishCounters();updateScroll();});
+updateHeader();updateScroll();restartImage();schedule();
