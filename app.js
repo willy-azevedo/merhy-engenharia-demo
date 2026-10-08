@@ -181,7 +181,7 @@ new IntersectionObserver(entries=>{heroVisible=entries[0].isIntersecting;schedul
 const revealObserver=new IntersectionObserver(entries=>entries.forEach(entry=>{
   if(entry.isIntersecting){entry.target.classList.add('visible');revealObserver.unobserve(entry.target);}
 }),{threshold:.08});
-document.querySelectorAll('.launch-grid,.values-grid,.journal-grid').forEach(group=>{
+document.querySelectorAll('.launch-grid,.values-grid,.journal-layout').forEach(group=>{
   group.querySelectorAll('.reveal').forEach((element,index)=>element.style.setProperty('--reveal-delay',`${index*110}ms`));
 });
 document.querySelectorAll('.reveal').forEach(element=>revealObserver.observe(element));
@@ -293,7 +293,8 @@ const dialogContent=document.getElementById('dialog-content');
 let previousFocus=null;
 const closeDialog=()=>dialog.close();
 function openDialog(markup){
-  previousFocus=document.activeElement;dialogContent.innerHTML=markup;
+  if(!dialog.open)previousFocus=document.activeElement;
+  dialogContent.innerHTML=markup;
   if(!dialog.open)dialog.showModal();dialog.scrollTop=0;document.body.classList.add('dialog-open');
   schedule();
   dialog.querySelector('.dialog-close').focus({preventScroll:true});
@@ -312,12 +313,18 @@ document.querySelectorAll('[data-scene]').forEach(button=>button.addEventListene
   openDialog(`<img class="dialog-hero scene-dialog-image" src="${media?media.src:image.getAttribute('src')}" alt="${media?media.alt:image.alt}"><div class="dialog-text"><p class="eyebrow">Ambientes Merhy</p><h2 id="dialog-title">${caption}</h2></div>`);
 }));
 document.querySelector('[data-gallery]').addEventListener('click',()=>openDialog(`<div class="dialog-text"><p class="eyebrow">Ambientes Merhy</p><h2 id="dialog-title">Espaços para fazer parte da sua vida.</h2><div class="dialog-gallery">${Object.values(projects).flatMap(project=>project.gallery.map(([image,caption])=>`<figure><img src="${image}" alt="${caption}"><figcaption>${project.name} · ${caption}</figcaption></figure>`)).join('')}</div></div>`));
-document.querySelectorAll('[data-article]').forEach(button=>button.addEventListener('click',()=>{const article=articles[button.dataset.article];openDialog(`<img class="dialog-hero" src="${article.image}" alt="${article.title}"><div class="dialog-text"><p class="eyebrow">${article.category} · Conteúdo demonstrativo</p><h2 id="dialog-title">${article.title}</h2>${article.paragraphs.map(paragraph=>`<p>${paragraph}</p>`).join('')}<p class="sample-note">Artigo de exemplo para avaliação da apresentação do blog.</p></div>`);}));
+function openArticle(key){
+  const article=articles[key];
+  openDialog(`<img class="dialog-hero" src="${article.image}" alt="${article.title}"><div class="dialog-text"><p class="eyebrow">${article.category}</p><h2 id="dialog-title">${article.title}</h2>${article.paragraphs.map(paragraph=>`<p>${paragraph}</p>`).join('')}</div>`);
+}
+document.querySelectorAll('[data-article]').forEach(button=>button.addEventListener('click',()=>openArticle(button.dataset.article)));
+document.querySelector('[data-all-articles]').addEventListener('click',()=>openDialog(`<div class="dialog-text"><p class="eyebrow">Blog Merhy</p><h2 id="dialog-title">Todos os conteúdos</h2><div class="journal-index">${Object.entries(articles).map(([key,article])=>`<article><img src="${article.image}" alt="${article.title}" loading="lazy"><div><p class="eyebrow">${article.category}</p><h3>${article.title}</h3></div><button type="button" data-modal-article="${key}" aria-label="Ler artigo: ${article.title}"></button></article>`).join('')}</div></div>`));
 dialog.addEventListener('click',event=>{
   if(event.target===dialog){const b=dialog.getBoundingClientRect();if(event.clientX<b.left||event.clientX>b.right||event.clientY<b.top||event.clientY>b.bottom)closeDialog();}
   const contact=event.target.closest('[data-dialog-contact]');
   if(contact){const interest=document.getElementById('contact-interest');interest.value=contact.dataset.dialogContact==='Sunview'?'Sunview · Ponta Grossa':contact.dataset.dialogContact==='Santa Helena'?'Santa Helena · Guaratuba':'Outras informações';closeDialog();document.getElementById('contato').scrollIntoView({behavior:reducedMotion.matches?'instant':'smooth'});}
   const work=event.target.closest('[data-modal-work]');if(work)openWork(work.dataset.modalWork);
+  const article=event.target.closest('[data-modal-article]');if(article)openArticle(article.dataset.modalArticle);
 });
 dialog.querySelector('.dialog-close').addEventListener('click',closeDialog);
 dialog.addEventListener('close',()=>{document.body.classList.remove('dialog-open');previousFocus?.focus({preventScroll:true});schedule();});

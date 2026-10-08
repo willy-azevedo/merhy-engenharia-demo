@@ -10,8 +10,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=20261008-autoplay">
-  <script src="app.js?v=20261008-autoplay" defer></script>
+  <link rel="stylesheet" href="styles.css?v=20261008-blog">
+  <script src="app.js?v=20261008-blog" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#conteudo">Ir para o conteúdo</a>
@@ -123,11 +123,25 @@
     </section>
 
     <section class="journal section container" id="blog">
-      <div class="section-heading reveal"><div><p class="eyebrow">Blog Merhy</p><h2>Ideias para<br> viver melhor.</h2></div><p>Arquitetura, espaços e escolhas.<br><span class="sample-note">Conteúdos demonstrativos.</span></p></div>
-      <div class="journal-grid">
-        <article class="journal-card reveal"><button class="image-button" type="button" data-article="espacos-integrados"><img src="assets/sunview-living.webp" alt="Ambientes integrados do Sunview" width="1600" height="900" loading="lazy"></button><p class="eyebrow">Arquitetura · Artigo de exemplo</p><h3><button type="button" data-article="espacos-integrados">Espaços integrados: uma nova relação com a casa.</button></h3><button class="text-link" type="button" data-article="espacos-integrados">Ler artigo</button></article>
-        <article class="journal-card reveal"><button class="image-button" type="button" data-article="localizacao"><img src="assets/sunview-detalhe.webp" alt="Arquitetura do Sunview e seu contexto urbano" width="1280" height="1600" loading="lazy"></button><p class="eyebrow">Escolhas · Artigo de exemplo</p><h3><button type="button" data-article="localizacao">Como olhar para a localização do seu próximo imóvel.</button></h3><button class="text-link" type="button" data-article="localizacao">Ler artigo</button></article>
-        <article class="journal-card reveal"><button class="image-button" type="button" data-article="areas-comuns"><img src="assets/santa-helena-piscina.webp" alt="Área de piscina do Santa Helena" width="1600" height="900" loading="lazy"></button><p class="eyebrow">Bem-estar · Artigo de exemplo</p><h3><button type="button" data-article="areas-comuns">Áreas comuns que fazem parte dos seus dias.</button></h3><button class="text-link" type="button" data-article="areas-comuns">Ler artigo</button></article>
+      <div class="section-heading reveal"><div><p class="eyebrow">Blog Merhy</p><h2>Ideias para<br> viver melhor.</h2></div><button class="button button-blue journal-all" type="button" data-all-articles>Todos os conteúdos</button></div>
+      <div class="journal-layout">
+        <article class="journal-card journal-featured reveal">
+          <div class="journal-image"><img src="assets/sunview-living.webp" alt="Ambientes integrados do Sunview" width="1600" height="900" loading="lazy"></div>
+          <div class="journal-copy"><p class="eyebrow">Arquitetura</p><h3>Espaços integrados: uma nova relação com a casa.</h3><p class="journal-excerpt">Quando estar, jantar e cozinha compartilham o mesmo ambiente, a casa ganha novas possibilidades de uso.</p><span class="journal-read" aria-hidden="true">Ler artigo</span></div>
+          <button class="journal-card-action" type="button" data-article="espacos-integrados" aria-label="Ler artigo: Espaços integrados: uma nova relação com a casa."></button>
+        </article>
+        <div class="journal-secondary">
+          <article class="journal-card reveal">
+            <div class="journal-image"><img src="assets/sunview-detalhe.webp" alt="Arquitetura do Sunview e seu contexto urbano" width="1280" height="1600" loading="lazy"></div>
+            <div class="journal-copy"><p class="eyebrow">Escolhas</p><h3>Como olhar para a localização do seu próximo imóvel.</h3><span class="journal-read" aria-hidden="true">Ler artigo</span></div>
+            <button class="journal-card-action" type="button" data-article="localizacao" aria-label="Ler artigo: Como olhar para a localização do seu próximo imóvel."></button>
+          </article>
+          <article class="journal-card reveal">
+            <div class="journal-image"><img src="assets/santa-helena-piscina.webp" alt="Área de piscina do Santa Helena" width="1600" height="900" loading="lazy"></div>
+            <div class="journal-copy"><p class="eyebrow">Bem-estar</p><h3>Áreas comuns que fazem parte dos seus dias.</h3><span class="journal-read" aria-hidden="true">Ler artigo</span></div>
+            <button class="journal-card-action" type="button" data-article="areas-comuns" aria-label="Ler artigo: Áreas comuns que fazem parte dos seus dias."></button>
+          </article>
+        </div>
       </div>
     </section>
 
