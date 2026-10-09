@@ -7,8 +7,8 @@
   try {
     if (token) sessionStorage.setItem(storageKey, token);
     else token = sessionStorage.getItem(storageKey) || '';
-    author = localStorage.getItem('merhy-review-author') || '';
   } catch {}
+  try { author = (localStorage.getItem('merhy-review-author') || '').trim().slice(0, 80); } catch {}
   function publicKey(key) {
     if (typeof key !== 'string') return false;
     if (key.startsWith('sb_publishable_')) return true;
@@ -43,7 +43,8 @@
         <p class="mr-notice" id="mr-notice" role="status" hidden></p>
         <form class="mr-form" id="mr-form" hidden>
           <h3>Novo comentário</h3><p id="mr-form-location"></p>
-          <label>Seu nome<input id="mr-author" name="author" required maxlength="80" autocomplete="name"></label>
+          <label id="mr-author-label">Seu nome<input id="mr-author" name="author" required maxlength="80" autocomplete="name"></label>
+          <div class="mr-identity" id="mr-identity" hidden><span>Comentando como <strong id="mr-author-name"></strong></span><button type="button" id="mr-change-author">Alterar nome</button></div>
           <label>Comentário<textarea id="mr-body" name="body" required maxlength="2000" placeholder="Escreva seu comentário sobre este ponto da página."></textarea></label>
           <div class="mr-form-actions">
             <button class="mr-primary" type="submit" id="mr-submit">Enviar comentário</button>
@@ -60,6 +61,15 @@
   const panel = $('mr-panel'), form = $('mr-form'), list = $('mr-list'), markers = ui.querySelector('.mr-markers'), outline = ui.querySelector('.mr-outline');
   let active = false, picking = false, draft = null, selected = null, comments = [], busy = false, refreshPromise = null, positionFrame = null, saveVersion = 0;
   $('mr-author').value = author;
+  function rememberAuthor() {
+    author = $('mr-author').value.trim();
+    try { if (author) localStorage.setItem('merhy-review-author', author); else localStorage.removeItem('merhy-review-author'); } catch {}
+  }
+  function showAuthor(editing = false) {
+    $('mr-author-label').hidden = !!author && !editing;
+    $('mr-identity').hidden = !author || editing;
+    $('mr-author-name').textContent = author;
+  }
   function notice(message, error = false) { $('mr-notice').textContent = message; $('mr-notice').dataset.error = String(error); $('mr-notice').hidden = !message; }
   function motionState() { document.body.classList.toggle('review-picking', picking); document.body.classList.toggle('review-drafting', !!draft); document.body.classList.toggle('review-focusing', active && !panel.hidden && !!selected); document.dispatchEvent(new Event('merhy-review-mode')); }
   function setPicking(value) {
@@ -71,6 +81,7 @@
     draft = value; setPicking(false); setPanel(true); form.hidden = false;
     $('mr-form-location').textContent = value.anchor.section;
     $('mr-submit').disabled = !ready;
+    showAuthor();
     $('mr-body').value = ''; notice(''); motionState(); (author ? $('mr-body') : $('mr-author')).focus();
     panel.querySelector('.mr-panel-content').scrollTop = 0;
   }
@@ -170,10 +181,11 @@
   $('mr-history').addEventListener('click', () => { setPicking(false); setPanel(panel.hidden); if (!panel.hidden) refresh(); });
   $('mr-close-panel').addEventListener('click', () => setPanel(false));
   $('mr-cancel').addEventListener('click', cancelDraft);
+  $('mr-author').addEventListener('input', rememberAuthor);
+  $('mr-change-author').addEventListener('click', () => { showAuthor(true); $('mr-author').focus(); $('mr-author').select(); });
   form.addEventListener('submit', async event => {
     event.preventDefault(); if (!ready || !draft || busy) return;
-    author = $('mr-author').value.trim(); const body = $('mr-body').value.trim(); if (!author || !body) return;
-    try { localStorage.setItem('merhy-review-author', author); } catch {}
+    rememberAuthor(); const body = $('mr-body').value.trim(); if (!author || !body) return;
     busy = true; $('mr-submit').disabled = true; notice('Enviando…');
     try {
       const saved = await rpc('add', { p_author: author, p_body: body, p_anchor: draft.anchor, p_parent: null });

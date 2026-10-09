@@ -32,6 +32,10 @@
 .mr-form h3{font-size:16px;line-height:1.4;margin-bottom:6px}
 .mr-form>p{font-size:11px;color:#65747f;line-height:1.6;margin-bottom:16px}
 .mr-form label{display:block;font-size:11px;font-weight:500;margin-top:12px}
+.mr-identity{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:12px;font-size:12px}
+.mr-identity span{min-width:0;overflow-wrap:anywhere}
+.mr-identity strong{font-weight:600}
+.mr-identity button{border:0;padding:4px 0;min-height:32px;background:transparent;font-size:11px;text-decoration:underline;text-underline-offset:3px;white-space:nowrap;flex:none}
 .mr-form input,.mr-form textarea{display:block;width:100%;margin-top:6px;padding:10px 11px;border:1px solid #cbd7de;border-radius:7px;background:#fff;color:#163a53;line-height:1.6;font-size:13px}
 .mr-form textarea{resize:vertical;min-height:110px}
 .mr-form-actions{display:flex;gap:8px;margin-top:14px}
