@@ -51,6 +51,11 @@
             <button type="button" id="mr-cancel">Cancelar</button>
           </div>
         </form>
+        <div class="mr-filter" role="group" aria-label="Filtrar comentários">
+          <button type="button" data-mr-filter="all" aria-pressed="true">Todos</button>
+          <button type="button" data-mr-filter="open" aria-pressed="false">Pendentes</button>
+          <button type="button" data-mr-filter="resolved" aria-pressed="false">Concluídos</button>
+        </div>
         <div id="mr-list"></div>
       </div>
     </aside>
@@ -59,7 +64,7 @@
   document.body.append(ui);
   const $ = id => ui.querySelector(`#${id}`);
   const panel = $('mr-panel'), form = $('mr-form'), list = $('mr-list'), markers = ui.querySelector('.mr-markers'), outline = ui.querySelector('.mr-outline');
-  let active = false, picking = false, draft = null, selected = null, comments = [], busy = false, refreshPromise = null, positionFrame = null, saveVersion = 0;
+  let active = false, picking = false, draft = null, selected = null, filter = 'all', comments = [], busy = false, refreshPromise = null, positionFrame = null, saveVersion = 0;
   $('mr-author').value = author;
   function rememberAuthor() {
     author = $('mr-author').value.trim();
@@ -80,7 +85,7 @@
   function openDraft(value) {
     draft = value; setPicking(false); setPanel(true); form.hidden = false;
     $('mr-form-location').textContent = value.anchor.section;
-    $('mr-submit').disabled = !ready;
+    $('mr-submit').disabled = !ready || busy;
     showAuthor();
     $('mr-body').value = ''; notice(''); motionState(); (author ? $('mr-body') : $('mr-author')).focus();
     panel.querySelector('.mr-panel-content').scrollTop = 0;
@@ -91,7 +96,7 @@
       const response = await fetch(`${config.supabaseUrl}/rest/v1/rpc/merhy_review_${name}`, { method: 'POST', headers: { apikey: config.publishableKey, 'Content-Type': 'application/json' }, body: JSON.stringify({ p_token: token, ...args }), signal: controller.signal, cache: 'no-store' });
       if (!response.ok) throw new Error('Não foi possível acessar os comentários. Confira o link ou tente novamente.');
       return await response.json();
-    } catch (error) { if (error.name === 'AbortError') throw new Error('A conexão demorou. Seu texto continua aqui; tente enviar novamente.'); throw error; }
+    } catch (error) { if (error.name === 'AbortError') throw new Error('A conexão demorou. Não foi possível confirmar a operação. Atualize os comentários antes de tentar novamente.'); throw error; }
     finally { clearTimeout(timeout); }
   }
   function roots() { return comments.filter(comment => !comment.parent_id); }
@@ -127,21 +132,55 @@
     const date = new Date(comment.created_at), time = textElement('time', Number.isNaN(date.valueOf()) ? '' : date.toLocaleString('pt-BR', { dateStyle: 'short', timeStyle: 'short' }));
     if (!Number.isNaN(date.valueOf())) time.dateTime = date.toISOString(); node.append(time);
   }
+  function setBusy(value) {
+    busy = value;
+    $('mr-submit').disabled = !ready || busy;
+    for (const button of list.querySelectorAll('[data-mr-resolve]')) button.disabled = !ready || busy;
+  }
+  async function resolveComment(comment, button) {
+    if (!ready || busy) return;
+    const resolved = comment.status === 'resolved';
+    setBusy(true);
+    // Invalidate an older list request before starting the mutation.
+    saveVersion++;
+    notice(resolved ? 'Reabrindo comentário…' : 'Concluindo comentário…');
+    let saved = null;
+    try {
+      saved = await rpc('resolve', { p_id: comment.id, p_resolved: !resolved });
+      if (!saved || saved.id !== comment.id || saved.status !== (resolved ? 'open' : 'resolved')) throw new Error('Não foi possível confirmar a alteração. Atualize os comentários e tente novamente.');
+      comments = comments.map(current => current.id === saved.id ? saved : current);
+      notice(resolved ? 'Comentário reaberto para todos.' : 'Comentário concluído para todos.');
+    } catch (error) { saved = null; notice(error.message, true); }
+    finally { saveVersion++; setBusy(false); }
+    if (saved) {
+      render();
+      const replacement = [...list.querySelectorAll('[data-mr-resolve]')].find(current => current.dataset.mrResolve === comment.id);
+      (replacement || ui.querySelector(`[data-mr-filter="${filter}"]`)).focus({ preventScroll: true });
+    } else button.focus({ preventScroll: true });
+  }
   function render() {
     const count = roots().length;
+    const completed = roots().filter(comment => comment.status === 'resolved').length;
     $('mr-count').textContent = count;
-    $('mr-total').textContent = `${count} ${count === 1 ? 'comentário' : 'comentários'}`;
+    $('mr-total').textContent = `${count} ${count === 1 ? 'comentário' : 'comentários'} · ${completed} ${completed === 1 ? 'concluído' : 'concluídos'}`;
     $('mr-history').setAttribute('aria-label', `Ver comentários (${count})`);
     list.replaceChildren(); markers.replaceChildren();
     for (const comment of roots()) {
-      const pin = textElement('button', String(numbered(comment)), 'mr-marker'); pin.type = 'button'; pin.dataset.id = comment.id; pin.setAttribute('aria-label', `Comentário ${numbered(comment)}: ${comment.anchor.section}`); pin.addEventListener('click', () => goTo(comment)); markers.append(pin);
+      const resolved = comment.status === 'resolved';
+      if (filter === 'open' && resolved || filter === 'resolved' && !resolved) continue;
+      const pin = textElement('button', String(numbered(comment)), 'mr-marker'); pin.type = 'button'; pin.dataset.id = comment.id; pin.dataset.resolved = String(resolved); pin.setAttribute('aria-label', `Comentário ${numbered(comment)}${resolved ? ' concluído' : ''}: ${comment.anchor.section}`); pin.addEventListener('click', () => goTo(comment)); markers.append(pin);
       const item = document.createElement('article'); item.className = `mr-item${selected === comment.id ? ' mr-selected' : ''}`;
-      const head = document.createElement('div'); head.className = 'mr-item-head'; details(comment, head); item.append(head);
+      const head = document.createElement('div'); head.className = 'mr-item-head'; details(comment, head); if (resolved) head.append(textElement('span', 'Concluído', 'mr-resolved-label')); item.append(head);
       const locationButton = textElement('button', `${numbered(comment)} · ${comment.anchor.section}`, 'mr-location'); locationButton.type = 'button'; locationButton.addEventListener('click', () => goTo(comment)); item.append(locationButton, textElement('p', comment.body));
       for (const reply of comments.filter(child => child.parent_id === comment.id)) { const node = document.createElement('div'); node.className = 'mr-reply'; details(reply, node); node.append(textElement('p', reply.body)); item.append(node); }
-      list.append(item);
+      const actions = document.createElement('div'); actions.className = 'mr-item-actions';
+      const resolveButton = textElement('button', resolved ? 'Reabrir' : 'Marcar como concluído');
+      resolveButton.type = 'button'; resolveButton.dataset.mrResolve = comment.id; resolveButton.disabled = !ready || busy;
+      resolveButton.setAttribute('aria-label', `${resolved ? 'Reabrir comentário' : 'Marcar como concluído o comentário'} ${numbered(comment)}`);
+      resolveButton.addEventListener('click', () => resolveComment(comment, resolveButton));
+      actions.append(resolveButton); item.append(actions); list.append(item);
     }
-    if (!list.children.length) list.append(textElement('p', 'Clique em Comentar e marque um ponto da página para deixar seu comentário.', 'mr-empty'));
+    if (!list.children.length) list.append(textElement('p', count ? 'Nenhum comentário neste filtro.' : 'Clique em Comentar e marque um ponto da página para deixar seu comentário.', 'mr-empty'));
     queuePosition();
   }
   async function refresh() {
@@ -183,15 +222,20 @@
   $('mr-cancel').addEventListener('click', cancelDraft);
   $('mr-author').addEventListener('input', rememberAuthor);
   $('mr-change-author').addEventListener('click', () => { showAuthor(true); $('mr-author').focus(); $('mr-author').select(); });
+  for (const button of ui.querySelectorAll('[data-mr-filter]')) button.addEventListener('click', () => {
+    filter = button.dataset.mrFilter;
+    ui.querySelectorAll('[data-mr-filter]').forEach(current => current.setAttribute('aria-pressed', String(current === button)));
+    selected = null; motionState(); render();
+  });
   form.addEventListener('submit', async event => {
     event.preventDefault(); if (!ready || !draft || busy) return;
     rememberAuthor(); const body = $('mr-body').value.trim(); if (!author || !body) return;
-    busy = true; $('mr-submit').disabled = true; notice('Enviando…');
+    setBusy(true); saveVersion++; notice('Enviando…');
     try {
       const saved = await rpc('add', { p_author: author, p_body: body, p_anchor: draft.anchor, p_parent: null });
       saveVersion++; comments = [...comments.filter(comment => comment.id !== saved.id), saved]; selected = saved.id; cancelDraft(); render(); notice('Comentário salvo.');
     } catch (error) { notice(error.message, true); }
-    finally { busy = false; $('mr-submit').disabled = !ready; }
+    finally { saveVersion++; setBusy(false); }
   });
   document.addEventListener('click', event => { if (!picking || event.target.closest('[data-review-ui]')) return; event.preventDefault(); event.stopImmediatePropagation(); const element = pickElement(event); openDraft({ anchor: pickedAnchor(element, event) }); }, true);
   document.addEventListener('pointermove', event => { if (!picking || event.target.closest('[data-review-ui]')) { outline.hidden = true; return; } const rect = pickElement(event).getBoundingClientRect(); outline.hidden = false; Object.assign(outline.style, { left: `${rect.left}px`, top: `${rect.top}px`, width: `${rect.width}px`, height: `${rect.height}px` }); });

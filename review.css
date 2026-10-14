@@ -24,6 +24,12 @@
 .mr-item-head{display:block}
 .mr-item-head strong{display:block;font-weight:600;font-size:14px;overflow-wrap:anywhere}
 .mr-item-head time{display:block;font-size:14px;color:#65747f;margin-top:3px}
+.mr-filter{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.mr-filter button{flex:1;padding:9px 8px;font-size:14px}
+.mr-item-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.mr-item-actions button{font-size:14px;text-align:left}
+.mr-resolved-label{display:inline-block;margin-top:9px;padding:3px 8px;border-radius:5px;background:#e7f3ec;color:#245b3c;font-size:14px;font-weight:600}
+.mr-marker[data-resolved=true]{background:#245b3c!important}
 .mr-item p{margin-top:10px;white-space:pre-wrap;overflow-wrap:anywhere;font-size:14px;line-height:1.7}
 .mr-location{display:flex!important;align-items:center;gap:7px;border:0!important;padding:0!important;font-size:14px!important;min-height:25px!important;background:transparent!important;margin-top:8px;text-align:left!important}
 .mr-reply{border-top:1px solid #e4eaed;padding-top:11px;margin-top:12px}
