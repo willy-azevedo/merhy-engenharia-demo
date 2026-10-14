@@ -389,4 +389,4 @@
 .portfolio-card{flex:0 0 calc((100% - 2 * var(--portfolio-gap))/3)}
 .portfolio-image{aspect-ratio:4/5}
 .portfolio-card h3{font-size:clamp(14px,2.6vw,27px);overflow-wrap:anywhere}
-@media(max-width:600px){.portfolio-card>.eyebrow{letter-spacing:.03em;margin-top:14px;overflow-wrap:anywhere}.portfolio-card h3{margin-top:6px}}
+@media(max-width:600px){.portfolio-track{--portfolio-gap:18px}.portfolio-card{flex-basis:86%}.portfolio-card>.eyebrow{letter-spacing:.03em;margin-top:18px;overflow-wrap:anywhere}.portfolio-card h3{font-size:26px;margin-top:6px}}
