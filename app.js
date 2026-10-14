@@ -243,7 +243,7 @@ const countObserver=new IntersectionObserver(entries=>entries.forEach(entry=>{
 countObserver.observe(document.querySelector('.stats'));
 
 const portfolioTrack=document.getElementById('portfolio-track');
-function movePortfolio(direction){portfolioTrack.scrollBy({left:direction*(portfolioTrack.querySelector('article').getBoundingClientRect().width+30),behavior:reducedMotion.matches?'instant':'smooth'});}
+function movePortfolio(direction){const gap=parseFloat(getComputedStyle(portfolioTrack).columnGap)||0;portfolioTrack.scrollBy({left:direction*(portfolioTrack.querySelector('article').getBoundingClientRect().width+gap),behavior:reducedMotion.matches?'instant':'smooth'});}
 document.getElementById('portfolio-prev').addEventListener('click',()=>movePortfolio(-1));
 document.getElementById('portfolio-next').addEventListener('click',()=>movePortfolio(1));
 

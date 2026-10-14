@@ -169,7 +169,7 @@
     return event.target.closest('img,h1,h2,h3,p,button,a,figure,label,input,textarea,select') || event.target;
   }
   function pickedAnchor(element, event) {
-    const rect = element.getBoundingClientRect(), section = element.closest('section'), names = { inicio: 'Abertura', lancamentos: 'Lançamentos', 'a-merhy': 'A Merhy', diferenciais: 'Nosso jeito de construir', espacos: 'Tempo para o que importa', portfolio: 'Obras entregues', blog: 'Blog', contato: 'Contato' };
+    const rect = element.getBoundingClientRect(), section = element.closest('section'), names = { inicio: 'Abertura', lancamentos: 'Lançamentos', 'a-merhy': 'A Merhy', diferenciais: 'Nosso jeito de construir', espacos: 'Tempo para o que importa', portfolio: 'Obras entregues', oportunidades: 'Oportunidades', blog: 'Blog', contato: 'Contato' };
     const heroProject = element.closest('.hero') ? document.getElementById('hero-cta').dataset.project : null;
     const livingPhoto = element.closest('.scene-home') && element.closest('.living-stage.sequencing') ? document.querySelector('.living-stage').dataset.activeImage : null;
     return { selector: selectorFor(element), x: Math.max(0, Math.min(1, (event.clientX - rect.left) / (rect.width || 1))), y: Math.max(0, Math.min(1, (event.clientY - rect.top) / (rect.height || 1))), section: names[section?.id] || (element.closest('.site-header') ? 'Menu principal' : 'Rodapé'), viewportWidth: innerWidth, heroProject, livingPhoto, image: heroProject ? document.getElementById('hero-image').getAttribute('src') : element.tagName === 'IMG' ? element.getAttribute('src') : null };
