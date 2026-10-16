@@ -1,0 +1,33 @@
+/* Category archives share the blog's sidebar, discovery tools and card grid. */
+.category-back { display: inline-flex; align-items: center; gap: 12px; font-size: 13px; color: var(--muted); margin-bottom: 28px; }
+.category-back span { font-size: 20px; }
+.category-back:hover { color: var(--blue); text-decoration: underline; text-underline-offset: 5px; }
+.category-profile { padding-top: 24px; border-top: 2px solid var(--accent); }
+.category-profile .eyebrow { font-size: 11px; }
+.category-profile h1 { font-size: clamp(36px, 3.3vw, 44px); margin-top: 18px; overflow-wrap: break-word; }
+.category-profile .blog-sidebar-description { margin-top: 22px; }
+.category-sidebar { max-height: calc(100svh - var(--header) - 48px); overflow-y: auto; scrollbar-width: thin; padding-right: 6px; }
+.category-library { min-width: 0; padding-top: 0; }
+.category-library .blog-library-heading { min-height: 100px; }
+.blog-category-page .blog-editorial .text-link { gap: 16px; justify-content: flex-start; }
+/* A category with one article uses the available width instead of an empty column. */
+.category-library .blog-card:only-child { grid-column: 1 / -1; }
+.category-library .blog-card:only-child .blog-image img { aspect-ratio: 16 / 8; }
+.category-library .blog-card:only-child h3 { font-size: clamp(28px, 3vw, 40px); max-width: 740px; }
+.category-library .blog-card:only-child .blog-card-excerpt { max-width: 680px; }
+/* Match the blog's tablet breakpoint and place discovery tools above the cards. */
+@media (max-width: 800px) {
+  .category-sidebar { max-height: none; overflow: visible; padding: 0; }
+  .category-back, .category-profile { grid-column: 1 / -1; }
+  .category-back { justify-self: start; margin-bottom: 23px; }
+  .category-profile h1 { font-size: 48px; }
+  .category-profile .blog-sidebar-description { margin-top: 18px; }
+  .category-sidebar .blog-topic-menu { grid-column: 1 / -1; }
+  .category-library { padding-top: 0; }
+  .category-library .blog-library-heading { min-height: 0; }
+}
+@media (max-width: 600px) {
+  .category-profile h1 { font-size: 44px; }
+  .category-library { padding-top: 0; }
+  .category-library .blog-card:only-child .blog-image img { aspect-ratio: 4 / 3; }
+}

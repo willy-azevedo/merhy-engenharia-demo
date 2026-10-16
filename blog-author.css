@@ -1,0 +1,30 @@
+/* Reuse the blog's editorial grid, search, categories and article cards. */
+.author-back { display: inline-flex; align-items: center; gap: 12px; font-size: 13px; color: var(--muted); margin-bottom: 28px; }
+.author-back span { font-size: 20px; }
+.author-back:hover { color: var(--blue); text-decoration: underline; text-underline-offset: 5px; }
+.author-profile { padding-top: 24px; border-top: 2px solid var(--accent); }
+.author-profile .eyebrow { font-size: 11px; }
+.author-profile h1 { font-size: clamp(40px, 3.6vw, 48px); margin-top: 18px; }
+.author-profile .blog-sidebar-description { margin-top: 22px; }
+.author-signature { color: #65879b; font-size: 13px; margin-top: 18px; }
+.author-sidebar { max-height: calc(100svh - var(--header) - 48px); overflow-y: auto; scrollbar-width: thin; padding-right: 6px; }
+.author-library { min-width: 0; padding-top: 0; }
+.author-library .blog-library-heading { min-height: 100px; }
+.blog-author-page .blog-editorial .text-link { gap: 16px; justify-content: flex-start; }
+/* Keep the same breakpoint as the blog: author and tools precede the cards. */
+@media (max-width: 800px) {
+  .author-sidebar { max-height: none; overflow: visible; padding: 0; }
+  .author-back, .author-profile { grid-column: 1 / -1; }
+  .author-back { justify-self: start; margin-bottom: 23px; }
+  .author-profile { max-width: 100%; }
+  .author-profile h1 { font-size: 48px; }
+  .author-profile .blog-sidebar-description { margin-top: 18px; }
+  .author-signature { margin-top: 12px; }
+  .author-sidebar .blog-topic-menu { grid-column: 1 / -1; }
+  .author-library { padding-top: 0; }
+  .author-library .blog-library-heading { min-height: 0; }
+}
+@media (max-width: 600px) {
+  .author-profile h1 { font-size: 44px; }
+  .author-library { padding-top: 0; }
+}

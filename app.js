@@ -53,7 +53,7 @@ function setMenu(open){
   menuButton.setAttribute('aria-label',open?'Fechar menu':'Abrir menu');header.classList.toggle('menu-open',open);
 }
 menuButton.addEventListener('click',()=>setMenu(mobileNav.hidden));
-mobileNav.querySelectorAll('button').forEach(link=>link.addEventListener('click',()=>setMenu(false)));
+mobileNav.querySelectorAll('a, button:not(.nav-dropdown-toggle)').forEach(link=>link.addEventListener('click',()=>setMenu(false)));
 document.addEventListener('keydown',event=>{if(event.key==='Escape'&&!mobileNav.hidden){setMenu(false);menuButton.focus();}});
 
 function shouldRun(){return heroVisible&&!document.hidden&&!reducedMotion.matches&&!document.body.classList.contains('review-picking')&&!document.body.classList.contains('review-drafting')&&!document.body.classList.contains('review-focusing');}
@@ -102,7 +102,7 @@ function showSlide(next){
   showHeroPhoto(0);
   const text={ 'hero-title':project.name,'hero-city':`${project.district} · ${project.city}`,'hero-tagline':project.tagline,'hero-area':project.area,'hero-area-label':project.areaLabel,'hero-rooms':project.rooms,'hero-extra':project.extra,'hero-cta-label':`Conheça o ${project.name}`,'slide-count':`0${activeSlide+1} / 02` };
   Object.entries(text).forEach(([id,value])=>document.getElementById(id).textContent=value);
-  document.getElementById('hero-cta').dataset.project=key;
+  document.getElementById('hero-cta').href=`${key}.html`;
   heroContent.setAttribute('aria-label',`${activeSlide+1} de 2: ${project.name}`);
   document.querySelectorAll('[data-slide]').forEach(button=>{button.setAttribute('aria-pressed',String(Number(button.dataset.slide)===activeSlide));button.querySelector('.slide-progress').style.transform='scaleX(0)';});
   heroIndicators.forEach((button,index)=>{button.setAttribute('aria-pressed',String(index===activeSlide));button.querySelector('.hero-indicator-progress').style.transform='scaleY(0)';});
