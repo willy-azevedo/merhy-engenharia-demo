@@ -1,0 +1,37 @@
+/* Search uses the same editorial grid and cards as the blog archives. */
+.search-back { display: inline-flex; align-items: center; gap: 12px; font-size: 13px; color: var(--muted); margin-bottom: 28px; }
+.search-back span { font-size: 20px; }
+.search-back:hover { color: var(--blue); text-decoration: underline; text-underline-offset: 5px; }
+.search-profile { padding-top: 24px; border-top: 2px solid var(--accent); }
+.search-profile .eyebrow { font-size: 11px; }
+.search-profile h1 { font-size: clamp(40px, 3.6vw, 48px); margin-top: 18px; }
+.search-profile .blog-sidebar-description { margin-top: 22px; }
+.search-sidebar { max-height: calc(100svh - var(--header) - 48px); overflow-y: auto; scrollbar-width: thin; padding-right: 6px; }
+.search-library { min-width: 0; padding-top: 0; }
+.search-library .blog-library-heading { min-height: 100px; margin-bottom: 0; }
+.search-library .blog-results-summary { border: 0; padding-block: 20px 0; margin-bottom: 30px; }
+.search-library .blog-results-summary:empty { display: none; }
+.search-library .blog-empty { width: 100%; max-width: none; border-left: 2px solid var(--accent); }
+.search-library .blog-empty h2 { font-size: clamp(26px, 2.6vw, 34px); }
+.blog-search-page .blog-editorial .text-link { gap: 16px; justify-content: flex-start; }
+.search-library .blog-card:only-child { grid-column: 1 / -1; }
+.search-library .blog-card:only-child .blog-image img { aspect-ratio: 16 / 8; }
+.search-library .blog-card:only-child h3 { font-size: clamp(28px, 3vw, 40px); max-width: 740px; }
+.search-library .blog-card:only-child .blog-card-excerpt { max-width: 680px; }
+/* Match the blog breakpoint: search and categories precede results on mobile. */
+@media (max-width: 800px) {
+  .search-sidebar { max-height: none; overflow: visible; padding: 0; }
+  .search-back, .search-profile { grid-column: 1 / -1; }
+  .search-back { justify-self: start; margin-bottom: 23px; }
+  .search-profile h1 { font-size: 48px; }
+  .search-profile .blog-sidebar-description { margin-top: 18px; }
+  .search-sidebar .blog-topic-menu { grid-column: 1 / -1; }
+  .search-library { padding-top: 0; }
+  .search-library .blog-library-heading { min-height: 0; }
+}
+@media (max-width: 600px) {
+  .search-profile h1 { font-size: 44px; }
+  .search-library { padding-top: 0; }
+  .search-library .blog-library-heading { flex-wrap: wrap; }
+  .search-library .blog-card:only-child .blog-image img { aspect-ratio: 4 / 3; }
+}
